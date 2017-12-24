@@ -1,0 +1,49 @@
+﻿<ThingSaveData>
+  <ReferenceId />
+  <PrefabName />
+  <CustomName />
+  <WorldPosition>
+    <x>0.0</x>
+    <y>0.0</y>
+    <z>0.0</z>
+  </WorldPosition>
+  <WorldRotation>
+    <x>0.0</x>
+    <y>0.0</y>
+    <z>0.0</z>
+    <w>0.0</w>
+    <eulerAngles>
+      <x>0</x>
+      <y>0</y>
+      <z>0</z>
+    </eulerAngles>
+  </WorldRotation>
+  <States />
+  <IsCustomName>false</IsCustomName>
+  <CustomColorIndex>-1</CustomColorIndex>
+  <OwnerSteamId>0</OwnerSteamId>
+  <Reagents />
+  <Indestructable>false</Indestructable>
+  <ParentReferenceId>0</ParentReferenceId>
+  <ParentSlotId>0</ParentSlotId>
+  <Dragged>false</Dragged>
+  <DraggedInteractionIndex>0</DraggedInteractionIndex>
+  <DragOffset>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+  </DragOffset>
+  <Velocity>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+  </Velocity>
+  <AngularVelocity>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+  </AngularVelocity>
+  <HealthCurrent>0</HealthCurrent>
+  <Quantity>0</Quantity>
+  <MothershipReferenceId>0</MothershipReferenceId>
+</ThingSaveData>
