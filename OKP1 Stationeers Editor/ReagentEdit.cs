@@ -59,8 +59,8 @@ namespace OKP1_Stationeers_Editor
         {
             ThingReagent thing = (ThingReagent)listBoxReagents.SelectedValue;
             thing.TypeName = textBoxReagent.Text;
-            // probably should "tryparse" and not explode if the user enters garbage...
-            thing.Quantity = Int32.Parse(textBoxQuantity.Text);
+            // this will throw an exception on garbage
+            thing.Quantity = Single.Parse(textBoxQuantity.Text);
             buttonSave.Enabled = false;
         }
 

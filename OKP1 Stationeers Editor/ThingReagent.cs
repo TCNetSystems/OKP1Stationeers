@@ -9,11 +9,11 @@ namespace OKP1_Stationeers_Editor
 {
     public class ThingReagent : ThingManager
     {
-        public int Quantity
+        public Single Quantity
         {
             get
             {
-                return Int32.Parse(XML.Element("Quantity").Value);
+                return Single.Parse(XML.Element("Quantity").Value);
             }
             set
             {
