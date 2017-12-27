@@ -43,6 +43,7 @@ namespace OKP1_Stationeers_Editor.Properties {
   <string>StructureFabricator</string>
   <string>StructureHydraulicPipeBender</string>
   <string>StructureAutolathe</string>
+  <string>StructureToolManufactory</string>
 </ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection MachinePrefabs {
             get {

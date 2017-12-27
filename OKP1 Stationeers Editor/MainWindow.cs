@@ -37,10 +37,7 @@ namespace OKP1_Stationeers_Editor
         public MainWindow()
         {
             InitializeComponent();
-        }
-        private void ToolStripMenuFile_Click(object sender, EventArgs e)
-        {
-
+            
         }
 
         private void ToolStripMenuFileExit_Click(object sender, EventArgs e)
@@ -213,7 +210,7 @@ namespace OKP1_Stationeers_Editor
                         break;
 
                     case ThingManager.ThingType.LockerItem:
-                        if (false) {
+                        {
                             ThingLockerItem thingLockerItem = (ThingLockerItem)thing;
                             TabPage lockerItemTabPage;
                             // here we have to check for a null XML and if so stand up an empty item...
@@ -350,6 +347,45 @@ namespace OKP1_Stationeers_Editor
 
             toolStripMenuFileSave.Enabled = false;
             WorldIsModified = false;
+        }
+
+        //
+        // basic idea taken from stackoverflow
+        // https://stackoverflow.com/questions/36895089/tabcontrol-with-close-and-add-button
+        //
+
+        private void rightEditTab_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            var tabPage = this.rightEditTab.TabPages[e.Index];
+            var tabRect = this.rightEditTab.GetTabRect(e.Index);
+            tabRect.Inflate(-2, -2);
+            var closeImage = Properties.Resources.CloseXSmall;
+            e.Graphics.DrawImage(closeImage,
+                (tabRect.Right - closeImage.Width),
+                tabRect.Top + (tabRect.Height - closeImage.Height) / 2);
+            TextRenderer.DrawText(e.Graphics, tabPage.Text, tabPage.Font,
+                tabRect, tabPage.ForeColor, TextFormatFlags.Left);
+
+        }
+
+        private void rightEditTab_MouseClick(object sender, MouseEventArgs e)
+        {
+            for (var i = 0; i < this.rightEditTab.TabPages.Count; i++)
+            {
+                var tabRect = this.rightEditTab.GetTabRect(i);
+                tabRect.Inflate(-2, -2);
+                var closeImage = Properties.Resources.CloseXSmall;
+                var imageRect = new Rectangle(
+                    (tabRect.Right - closeImage.Width),
+                    tabRect.Top + (tabRect.Height - closeImage.Height) / 2,
+                    closeImage.Width,
+                    closeImage.Height);
+                if (imageRect.Contains(e.Location))
+                {
+                    this.rightEditTab.TabPages.RemoveAt(i);
+                    break;
+                }
+            }
         }
     }
 }

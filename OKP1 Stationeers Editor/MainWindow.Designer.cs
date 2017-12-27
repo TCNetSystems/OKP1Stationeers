@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Players");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Lockers");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Machines");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Players");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Lockers");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Machines");
             this.EdMainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,7 +74,6 @@
             this.toolStripMenuFile.Name = "toolStripMenuFile";
             this.toolStripMenuFile.Size = new System.Drawing.Size(37, 20);
             this.toolStripMenuFile.Text = "&File";
-            this.toolStripMenuFile.Click += new System.EventHandler(this.ToolStripMenuFile_Click);
             // 
             // toolStripMenuFileOpen
             // 
@@ -160,16 +159,16 @@
             this.treeViewNavLeft.Enabled = false;
             this.treeViewNavLeft.Location = new System.Drawing.Point(0, 0);
             this.treeViewNavLeft.Name = "treeViewNavLeft";
-            treeNode1.Name = "Players";
-            treeNode1.Text = "Players";
-            treeNode2.Name = "Lockers";
-            treeNode2.Text = "Lockers";
-            treeNode3.Name = "Machines";
-            treeNode3.Text = "Machines";
+            treeNode7.Name = "Players";
+            treeNode7.Text = "Players";
+            treeNode8.Name = "Lockers";
+            treeNode8.Text = "Lockers";
+            treeNode9.Name = "Machines";
+            treeNode9.Text = "Machines";
             this.treeViewNavLeft.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
+            treeNode7,
+            treeNode8,
+            treeNode9});
             this.treeViewNavLeft.Size = new System.Drawing.Size(271, 510);
             this.treeViewNavLeft.TabIndex = 0;
             this.treeViewNavLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewNavLeft_AfterSelect);
@@ -177,11 +176,15 @@
             // rightEditTab
             // 
             this.rightEditTab.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rightEditTab.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.rightEditTab.Location = new System.Drawing.Point(0, 0);
             this.rightEditTab.Name = "rightEditTab";
+            this.rightEditTab.Padding = new System.Drawing.Point(12, 4);
             this.rightEditTab.SelectedIndex = 0;
             this.rightEditTab.Size = new System.Drawing.Size(538, 510);
             this.rightEditTab.TabIndex = 0;
+            this.rightEditTab.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.rightEditTab_DrawItem);
+            this.rightEditTab.MouseClick += new System.Windows.Forms.MouseEventHandler(this.rightEditTab_MouseClick);
             // 
             // toolStripStatusLabel1
             // 

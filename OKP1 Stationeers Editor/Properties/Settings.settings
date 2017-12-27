@@ -12,6 +12,7 @@
   &lt;string&gt;StructureFabricator&lt;/string&gt;
   &lt;string&gt;StructureHydraulicPipeBender&lt;/string&gt;
   &lt;string&gt;StructureAutolathe&lt;/string&gt;
+  &lt;string&gt;StructureToolManufactory&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>

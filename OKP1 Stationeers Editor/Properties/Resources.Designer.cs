@@ -61,6 +61,26 @@ namespace OKP1_Stationeers_Editor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CloseXSmall {
+            get {
+                object obj = ResourceManager.GetObject("CloseXSmall", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CloseXSmallRed {
+            get {
+                object obj = ResourceManager.GetObject("CloseXSmallRed", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;ThingSaveData&gt;
         ///  &lt;ReferenceId /&gt;
         ///  &lt;PrefabName /&gt;
