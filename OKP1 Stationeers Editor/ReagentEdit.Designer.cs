@@ -39,7 +39,6 @@
             this.textBoxReagent = new System.Windows.Forms.TextBox();
             this.textBoxQuantity = new System.Windows.Forms.TextBox();
             this.buttonDelete = new System.Windows.Forms.Button();
-            this.buttonClose = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -84,7 +83,6 @@
             this.tableLayoutPanel2.Controls.Add(this.textBoxReagent, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.textBoxQuantity, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.buttonDelete, 1, 3);
-            this.tableLayoutPanel2.Controls.Add(this.buttonClose, 0, 4);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(268, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -178,16 +176,6 @@
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
-            // buttonClose
-            // 
-            this.buttonClose.Location = new System.Drawing.Point(3, 111);
-            this.buttonClose.Name = "buttonClose";
-            this.buttonClose.Size = new System.Drawing.Size(75, 23);
-            this.buttonClose.TabIndex = 8;
-            this.buttonClose.Text = "Close";
-            this.buttonClose.UseVisualStyleBackColor = true;
-            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
-            // 
             // ReagentEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -217,6 +205,5 @@
         private System.Windows.Forms.TextBox textBoxReagent;
         private System.Windows.Forms.TextBox textBoxQuantity;
         private System.Windows.Forms.Button buttonDelete;
-        private System.Windows.Forms.Button buttonClose;
     }
 }
