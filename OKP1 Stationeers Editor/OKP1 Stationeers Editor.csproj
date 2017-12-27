@@ -40,7 +40,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -107,7 +106,6 @@
   <ItemGroup>
     <Content Include="LockerItemTemplate.xml" />
     <None Include="Resources\Close_red_16x.png" />
-    <None Include="Resources\CloseXSmall.ico" />
     <Content Include="Resources\Close_8x_16x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

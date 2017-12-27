@@ -62,6 +62,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
             }
         }
         "Release"
@@ -211,15 +219,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:OKP1 Stationeers Editor Setup"
-        "ProductCode" = "8:{9D6C2757-2C29-4817-BB2E-D6BE58FD80E2}"
-        "PackageCode" = "8:{B92A2325-D6FC-4BDC-9280-B21DF47B2227}"
+        "ProductCode" = "8:{1D57A231-BE8C-4B55-9A77-A55D71CC8E2E}"
+        "PackageCode" = "8:{60684AD4-3F8B-41B5-921E-35DE93E32DF4}"
         "UpgradeCode" = "8:{58B1B219-89C0-4B03-BFC7-DBC40E8B6CD6}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:0.0.2"
         "Manufacturer" = "8:TCNet Systems"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

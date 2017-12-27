@@ -46,6 +46,8 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.AutoScroll = true;
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -57,7 +59,7 @@
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(530, 484);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(532, 484);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // listBoxReagents
@@ -66,12 +68,14 @@
             this.listBoxReagents.FormattingEnabled = true;
             this.listBoxReagents.Location = new System.Drawing.Point(3, 3);
             this.listBoxReagents.Name = "listBoxReagents";
-            this.listBoxReagents.Size = new System.Drawing.Size(259, 478);
+            this.listBoxReagents.Size = new System.Drawing.Size(260, 478);
             this.listBoxReagents.TabIndex = 0;
             this.listBoxReagents.SelectedIndexChanged += new System.EventHandler(this.listBoxReagents_SelectedIndexChanged);
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.AutoSize = true;
+            this.tableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -84,7 +88,7 @@
             this.tableLayoutPanel2.Controls.Add(this.textBoxQuantity, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.buttonDelete, 1, 3);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(268, 3);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(269, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 5;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -92,14 +96,14 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(259, 138);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(260, 135);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(78, 7);
+            this.label1.Location = new System.Drawing.Point(79, 7);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(48, 13);
             this.label1.TabIndex = 0;
@@ -109,7 +113,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(80, 34);
+            this.label2.Location = new System.Drawing.Point(81, 34);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(46, 13);
             this.label2.TabIndex = 1;
@@ -129,7 +133,7 @@
             // buttonCancel
             // 
             this.buttonCancel.Enabled = false;
-            this.buttonCancel.Location = new System.Drawing.Point(132, 57);
+            this.buttonCancel.Location = new System.Drawing.Point(133, 57);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 21);
             this.buttonCancel.TabIndex = 3;
@@ -150,7 +154,7 @@
             // textBoxReagent
             // 
             this.textBoxReagent.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBoxReagent.Location = new System.Drawing.Point(132, 3);
+            this.textBoxReagent.Location = new System.Drawing.Point(133, 3);
             this.textBoxReagent.Name = "textBoxReagent";
             this.textBoxReagent.Size = new System.Drawing.Size(124, 20);
             this.textBoxReagent.TabIndex = 5;
@@ -159,7 +163,7 @@
             // textBoxQuantity
             // 
             this.textBoxQuantity.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBoxQuantity.Location = new System.Drawing.Point(132, 30);
+            this.textBoxQuantity.Location = new System.Drawing.Point(133, 30);
             this.textBoxQuantity.MaxLength = 18;
             this.textBoxQuantity.Name = "textBoxQuantity";
             this.textBoxQuantity.Size = new System.Drawing.Size(124, 20);
@@ -168,7 +172,7 @@
             // 
             // buttonDelete
             // 
-            this.buttonDelete.Location = new System.Drawing.Point(132, 84);
+            this.buttonDelete.Location = new System.Drawing.Point(133, 84);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(75, 21);
             this.buttonDelete.TabIndex = 7;
@@ -182,13 +186,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ReagentEdit";
-            this.Size = new System.Drawing.Size(530, 484);
+            this.Size = new System.Drawing.Size(532, 484);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

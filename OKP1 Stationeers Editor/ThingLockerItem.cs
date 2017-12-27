@@ -118,7 +118,7 @@ namespace OKP1_Stationeers_Editor
         private string _genName()
         {
             
-            return $"Slot: {ParentSlotId} {Id.ToString()} {PrefabName}";
+            return $"Slot: {ParentSlotId} {Id.ToString()} {PrefabName} {TypeData}";
         }
         public bool GenerateNewLockerItem(ThingLocker thingLocker, int parentSlotId, Int64 newItemId)
         {

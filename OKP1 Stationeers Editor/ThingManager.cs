@@ -10,9 +10,37 @@ namespace OKP1_Stationeers_Editor
 {
     public class ThingManager
     {
-        public enum ThingType { NotInit, Player, Locker, Solar, LockerItem, Machine, Reagent }
+        public enum ThingType { NotInit, Player, Locker, LockerItem, Machine, Reagent }
+
         public virtual string Name => _name;
+        public string TypeData
+        {
+            get
+            {
+                if ( XML == null)
+                {
+                    return null;
+                }
+                if (XML.Attributes().FirstOrDefault(a => a.Name.LocalName == "type") != null)
+                {
+                    return XML.Attributes().FirstOrDefault(a => a.Name.LocalName == "type").Value;
+                }
+                return null;
+            }
+            set
+            {
+                if ( XML == null)
+                {
+                    return;
+                }
+                if (XML.Attributes().FirstOrDefault(a => a.Name.LocalName == "type") != null)
+                {
+                    XML.Attributes().FirstOrDefault(a => a.Name.LocalName == "type").SetValue(value);
+                }
+            }
+        }
         protected string _name = null;
+
         public Int64 Id
         {
             get

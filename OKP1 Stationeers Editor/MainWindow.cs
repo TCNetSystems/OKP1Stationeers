@@ -150,10 +150,10 @@ namespace OKP1_Stationeers_Editor
         private void doTreeCleanup()
         {
             treeViewNavLeft.BeginUpdate();
+            treeViewNavLeft.CollapseAll();
             foreach(TreeNode t in treeViewNavLeft.Nodes)
             {
                 t.Nodes.Clear();
-                t.Collapse();
             }
             treeViewNavLeft.EndUpdate();
         }
