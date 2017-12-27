@@ -21,10 +21,8 @@ namespace OKP1_Stationeers_Editor
         }
         
 
-        public ReagentEdit(ThingMachine newMachine)
+        public ReagentEdit(ThingMachine newMachine) : this()
         {
-
-            InitializeComponent();
 
             // populate us...
             machine = newMachine;
@@ -98,14 +96,5 @@ namespace OKP1_Stationeers_Editor
             }
         }
 
-        private void buttonClose_Click(object sender, EventArgs e)
-        {
-            // I'd rather have an X or an icon in the tab itself, but there's no common way to do that
-            // and adding it in is an unholy mess.  Ahh the idiocy of writing Windows GUI code.
-            TabPage myPage = (TabPage)this.Parent;
-            TabControl myTab = (TabControl)myPage.Parent;
-            myTab.TabPages.Remove(myPage);
-
-        }
     }
 }

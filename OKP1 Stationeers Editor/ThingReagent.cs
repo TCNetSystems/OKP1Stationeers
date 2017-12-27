@@ -41,9 +41,9 @@ namespace OKP1_Stationeers_Editor
             _typeOf = ThingType.Reagent;
         }
 
-        public ThingReagent(XElement thing)
+        public ThingReagent(XElement thing) : this()
         {
-            _typeOf = ThingType.Reagent;
+
             _xmlThing = thing;
             // get name from TypeName
             _name = thing.Element("TypeName").Value;

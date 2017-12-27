@@ -31,12 +31,5 @@ namespace OKP1_Stationeers_Editor
             textBoxXML.Text = lockerItem.XML.ToString();
         }
 
-        private void buttonClose_Click(object sender, EventArgs e)
-        {
-            TabPage myPage = (TabPage)this.Parent;
-            TabControl myTab = (TabControl)myPage.Parent;
-            myTab.TabPages.Remove(myPage);
-
-        }
     }
 }
