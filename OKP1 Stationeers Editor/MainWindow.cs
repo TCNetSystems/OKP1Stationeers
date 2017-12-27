@@ -86,10 +86,15 @@ namespace OKP1_Stationeers_Editor
 
         private void CompleteLoading()
         {
-            // find and populate lockers
-            //and ln.Element("PrefabName") = "StructureStorageLocker"
+
+            // we defer updating the status bar until the end
+            // I'm not *certain* it's spamming a thousand odd updates but this will keep that from happening
+
+            UInt64 newMaxRefVal = 0;
+
             treeViewNavLeft.BeginUpdate();
             doTreeCleanup();
+
             // Run through and find the highest reference ID, lockers..etc...
             TreeNode treeLocker = treeViewNavLeft.Nodes["Lockers"];
             TreeNode treeMachines = treeViewNavLeft.Nodes["Machines"];
@@ -100,9 +105,9 @@ namespace OKP1_Stationeers_Editor
                 if(ln.Element("ReferenceId") != null)
                 {
                     UInt64 newVal = UInt64.Parse(ln.Element("ReferenceId").Value);
-                    if( newVal > MaxThingRefId)
+                    if( newVal > newMaxRefVal)
                     {
-                        MaxThingRefId = newVal;
+                        newMaxRefVal = newVal;
                     }
                     
                 }
@@ -143,6 +148,7 @@ namespace OKP1_Stationeers_Editor
 
             }
             treeViewNavLeft.EndUpdate();
+            MaxThingRefId = newMaxRefVal;
 
 
         }
