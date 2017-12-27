@@ -62,6 +62,7 @@ namespace OKP1_Stationeers_Editor
             // this will throw an exception on garbage
             thing.Quantity = Single.Parse(textBoxQuantity.Text);
             buttonSave.Enabled = false;
+            buttonCancel.Enabled = false;
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -97,5 +98,14 @@ namespace OKP1_Stationeers_Editor
             }
         }
 
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            // I'd rather have an X or an icon in the tab itself, but there's no common way to do that
+            // and adding it in is an unholy mess.  Ahh the idiocy of writing Windows GUI code.
+            TabPage myPage = (TabPage)this.Parent;
+            TabControl myTab = (TabControl)myPage.Parent;
+            myTab.TabPages.Remove(myPage);
+
+        }
     }
 }

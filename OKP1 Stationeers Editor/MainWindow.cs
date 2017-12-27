@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace OKP1_Stationeers_Editor
 {
@@ -61,7 +62,7 @@ namespace OKP1_Stationeers_Editor
         private void ToolStripMenuFileOpen_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "World File|world.xml";
+            openFileDialog.Filter = "World File|world.xml|All XML (*.xml)|*.xml";
             openFileDialog.Title = "Select Stationeers World File";
 
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -114,8 +115,9 @@ namespace OKP1_Stationeers_Editor
                 if (thingType == "StructureSaveData" && ln.Element("PrefabName").Value == "StructureStorageLocker")
                 {
                     ThingLocker thing = new ThingLocker(ln);
-                    TreeNode thisnode = treeLocker.Nodes.Add(thing.Id.ToString(), thing.Name);
-                    thisnode.Tag = thing;
+                    TreeNode thisNode = treeLocker.Nodes.Add(thing.Id.ToString(), thing.Name);
+                    thisNode.Tag = thing;
+                    LockerTreeViewAddChildNodes(thisNode.Nodes, thing);
                     continue;
                 }
 
@@ -138,6 +140,7 @@ namespace OKP1_Stationeers_Editor
                         ThingMachine thing = new ThingMachine(ln);
                         TreeNode thisNode = treeMachines.Nodes.Add(thing.Id.ToString(), thing.Name);
                         thisNode.Tag = thing;
+                        
                     }
                 }
 
@@ -193,13 +196,15 @@ namespace OKP1_Stationeers_Editor
                 switch (thing.TypeOf)
                 {
                     case ThingManager.ThingType.Locker:
-                        // Console.WriteLine("selected locker {0} [{1}]", thing.ToString(), sel.FullPath);
-                        // probably reimplement this similar to the Machines+Reagents...
-                        ThingLocker thingLocker = (ThingLocker)thing;
-                        if (!thingLocker.DataLoadedToNode)
                         {
-                            Console.WriteLine($"Locker {thingLocker.Id} not loaded, loading now");
-                            LockerTreeViewAddChildNodes(sel.Nodes, thingLocker);
+                            // Console.WriteLine("selected locker {0} [{1}]", thing.ToString(), sel.FullPath);
+                            // probably reimplement this similar to the Machines+Reagents...
+                            ThingLocker thingLocker = (ThingLocker)thing;
+                            if (!thingLocker.DataLoadedToNode)
+                            {
+                                Console.WriteLine($"Locker {thingLocker.Id} not loaded, loading now");
+                                LockerTreeViewAddChildNodes(sel.Nodes, thingLocker);
+                            }
                         }
                         break;
 
@@ -208,36 +213,64 @@ namespace OKP1_Stationeers_Editor
                         break;
 
                     case ThingManager.ThingType.LockerItem:
+                        if (false) {
+                            ThingLockerItem thingLockerItem = (ThingLockerItem)thing;
+                            TabPage lockerItemTabPage;
+                            // here we have to check for a null XML and if so stand up an empty item...
+                            if (thingLockerItem.XML == null)
+                            {
+                                // This will have to go into a "select item" control because
+                                // of the <States /> bits AND for stored f/ex tanks we'll need to populate their atmo
+                                // stubs I'm fairly certain or the game will NRE
+                                // grab the parent ThingLocker
+                                ThingLocker thingLocker = (ThingLocker)sel.Parent.Tag;
+                                // figure out the slot number from the key....
+                                // sel.Name should be format "ESLOT <int>"
+                                Regex findSlot = new Regex(@"ESLOT\s+(\d+)");
+                                Match slotMatch = Regex.Match(sel.Name, @"ESLOT\s+(\d+)");
+                                int parentSlotId = Int32.Parse(slotMatch.Groups[1].Value);
+                                MaxThingRefId++;
+                                thingLockerItem.GenerateNewLockerItem(thingLocker, parentSlotId, (long)MaxThingRefId);
+                                // rebuild the tree node bits...
+                                sel.Name = thingLockerItem.Id.ToString();
+                                sel.Text = thingLockerItem.Name;
 
-                        /*
-                        // if we've got it, pull the XML to the temp view....
-                        if(thing.XML != null)
-                        {
-                            textBox1.Text = thing.XML.ToString();
+
+                            }
+                            string tabKey = $"{thingLockerItem.ParentReferenceId} {thingLockerItem.Name}";
+                            if (!rightEditTab.TabPages.ContainsKey(tabKey))
+                            {
+                                lockerItemTabPage = new TabPage(tabKey);
+                                lockerItemTabPage.Name = tabKey;
+                                lockerItemTabPage.Controls.Add(new LockerItemEdit(thingLockerItem));
+                                rightEditTab.TabPages.Add(lockerItemTabPage);
+                                rightEditTab.SelectTab(lockerItemTabPage);
+                            }
+                            else
+                            {
+                                rightEditTab.SelectTab(tabKey);
+                            }
                         }
-                        else
-                        {
-                            textBox1.Text = "";
-                        }
-                        */
                         break;
 
                     case ThingManager.ThingType.Machine:
-                        ThingMachine thingMachine = (ThingMachine)thing;
-                        TabPage machineReagentsPage;
-                        // see if it's already open...
-                        string tabKey = $"{thingMachine.Id} Reagents";
-                        if(!rightEditTab.TabPages.ContainsKey(tabKey))
                         {
-                            machineReagentsPage = new TabPage(tabKey);
-                            machineReagentsPage.Name = tabKey;
-                            machineReagentsPage.Controls.Add(new ReagentEdit(thingMachine));
-                            rightEditTab.TabPages.Add(machineReagentsPage);
-                            rightEditTab.SelectTab(machineReagentsPage);
-                        }
-                        else
-                        {
-                            rightEditTab.SelectTab(tabKey);
+                            ThingMachine thingMachine = (ThingMachine)thing;
+                            TabPage machineReagentsPage;
+                            // see if it's already open...
+                            string tabKey = $"{thingMachine.Id} Reagents";
+                            if (!rightEditTab.TabPages.ContainsKey(tabKey))
+                            {
+                                machineReagentsPage = new TabPage(tabKey);
+                                machineReagentsPage.Name = tabKey;
+                                machineReagentsPage.Controls.Add(new ReagentEdit(thingMachine));
+                                rightEditTab.TabPages.Add(machineReagentsPage);
+                                rightEditTab.SelectTab(machineReagentsPage);
+                            }
+                            else
+                            {
+                                rightEditTab.SelectTab(tabKey);
+                            }
                         }
                         break;
 
@@ -296,10 +329,11 @@ namespace OKP1_Stationeers_Editor
                 {
                     // later we catch the null XML to create a new node and potentially save it...
                     thing = new ThingLockerItem();
-                    treeNode = nodes.Add(loop.ToString(), $"Slot: {loop} <EMPTY>");
+                    treeNode = nodes.Add($"ESLOT {loop.ToString()}", $"Slot: {loop} <EMPTY>");
                 }
                 treeNode.Tag = thing;
-                treeNode.EnsureVisible();
+                // originally I was delayed loading so this was necessary so the expand happened...
+                //treeNode.EnsureVisible();
                 loop++;
             }
         }

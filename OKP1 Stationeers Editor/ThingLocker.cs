@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace OKP1_Stationeers_Editor
 {
-    class ThingLocker : ThingManager
+    public class ThingLocker : ThingManager
     {
         public bool DataLoadedToNode
         {

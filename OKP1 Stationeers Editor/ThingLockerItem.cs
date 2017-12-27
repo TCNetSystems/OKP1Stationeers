@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace OKP1_Stationeers_Editor
 {
-    class ThingLockerItem : ThingManager
+    public class ThingLockerItem : ThingManager
     {
 
         public int ParentSlotId
@@ -36,7 +36,7 @@ namespace OKP1_Stationeers_Editor
                 // try to update the element...
                 if (XML.Element("ParentSlotId") != null)
                 {
-                    XML.Element("ParentSlotID").SetValue(value);
+                    XML.Element("ParentSlotId").SetValue(value);
                 }
             }
         }
@@ -70,6 +70,36 @@ namespace OKP1_Stationeers_Editor
                 }
             }
         }
+        public string PrefabName
+        {
+            get
+            {
+                if (XML == null)
+                {
+                    return null;
+                }
+                if (XML.Element("PrefabName") != null)
+                {
+                    return XML.Element("PrefabName").Value;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                if (XML == null)
+                {
+                    return;
+                }
+                // try to update the element...
+                if (XML.Element("PrefabName") != null)
+                {
+                    XML.Element("PrefabName").SetValue(value);
+                }
+            }
+        }
 
         public ThingLockerItem() : base()
         {
@@ -82,10 +112,37 @@ namespace OKP1_Stationeers_Editor
             _typeOf = ThingType.LockerItem;
             
             // reset name sensibly...
+            
+            _name = _genName();
+        }
+        private string _genName()
+        {
+            
+            return $"Slot: {ParentSlotId} {Id.ToString()} {PrefabName}";
+        }
+        public bool GenerateNewLockerItem(ThingLocker thingLocker, int parentSlotId, Int64 newItemId)
+        {
+            XElement parentLockerXML = thingLocker.XML;
+            XElement newXML = XElement.Parse(Properties.Resources.LockerItemTemplate);
+            XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
+            _xmlThing = newXML;
+            // add empty type attribute...
+            newXML.Add(new XAttribute(xsi + "type",""));
+            // set our ref
+            ReferenceId = newItemId;
+            // set parent ref
+            ParentReferenceId = thingLocker.Id;
+            // set parent slot
+            ParentSlotId = parentSlotId;
 
-            string parentSlotId = thing.Element("ParentSlotId").Value;
-            string prefabName = thing.Element("PrefabName").Value;
-            _name = $"Slot: {parentSlotId} {Id.ToString()} {prefabName}";
+            PrefabName = "StructureTypeUninit";
+
+            parentLockerXML.Add(newXML);
+            _name = _genName();
+            
+
+            return true;
+
         }
     }
 

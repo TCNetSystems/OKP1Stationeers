@@ -45,6 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LockerItemEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LockerItemEdit.Designer.cs">
+      <DependentUpon>LockerItemEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +72,9 @@
     <Compile Include="ThingManager.cs" />
     <Compile Include="ThingPlayer.cs" />
     <Compile Include="ThingReagent.cs" />
+    <EmbeddedResource Include="LockerItemEdit.resx">
+      <DependentUpon>LockerItemEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -77,6 +86,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ReagentEdit.resx">
       <DependentUpon>ReagentEdit.cs</DependentUpon>

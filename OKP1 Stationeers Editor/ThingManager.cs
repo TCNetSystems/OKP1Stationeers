@@ -15,8 +15,42 @@ namespace OKP1_Stationeers_Editor
         protected string _name = null;
         public Int64 Id
         {
-            get;
-        }  = 0;
+            get
+            {
+                return ReferenceId;
+            }
+
+        }
+        public Int64 ReferenceId
+        {
+            get
+            {
+                if (XML == null)
+                {
+                    return -1;
+                }
+                if (XML.Element("ReferenceId") != null)
+                {
+                    return Int64.Parse(XML.Element("ReferenceId").Value);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            set
+            {
+                if (XML == null)
+                {
+                    return;
+                }
+                // try to update the element...
+                if (XML.Element("ReferenceId") != null)
+                {
+                    XML.Element("ReferenceId").SetValue(value);
+                }
+            }
+        }
         protected XElement _xmlThing = null;
         public ThingType TypeOf
         {
@@ -36,13 +70,10 @@ namespace OKP1_Stationeers_Editor
         {
             string name = null;
             string cn = thing.Element("CustomName").Value;
-            
-            Int64 refid = 0;
-            if(Int64.TryParse(thing.Element("ReferenceId").Value, out refid))
-            {
-                Id = refid;
-            }
-            name = refid.ToString();
+            // do this early so the get/setters work
+            _xmlThing = thing;
+
+            name = ReferenceId.ToString();
             if (cn.Length > 0)
             {
                 name += " " + cn;
@@ -52,7 +83,7 @@ namespace OKP1_Stationeers_Editor
                 name += " <unnamed>";
             }
             _name = name;
-            _xmlThing = thing;
+            
         }
 
         public ThingManager(XElement thing, ThingType typeOf) : this(thing) => _typeOf = typeOf;
