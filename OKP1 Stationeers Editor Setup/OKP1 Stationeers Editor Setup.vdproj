@@ -21,20 +21,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D7989D9E4440B241E444B82C4330B930"
-        "OwnerKey" = "8:_42EDA81B14834A68B04AB841A143AEA2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_42EDA81B14834A68B04AB841A143AEA2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D7989D9E4440B241E444B82C4330B930"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -132,37 +120,6 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D7989D9E4440B241E444B82C4330B930"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
-                "ScatterAssemblies"
-                {
-                    "_D7989D9E4440B241E444B82C4330B930"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:System.Net.Http.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_8CF7E3322B0D446BB0DEF11F868D2F65"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
         }
         "FileType"
         {
@@ -178,6 +135,17 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_ABBE890BDB3C4BD787AB58D0775A0735"
+                    {
+                    "Name" = "8:OKP1"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_60A708C6359449EEB3CC05E37CF828DF"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_8CF7E3322B0D446BB0DEF11F868D2F65"
@@ -218,9 +186,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:OKP1 Stationeers Editor Setup"
+        "ProductName" = "8:OKP1 Stationeers Editor"
         "ProductCode" = "8:{1D57A231-BE8C-4B55-9A77-A55D71CC8E2E}"
-        "PackageCode" = "8:{60684AD4-3F8B-41B5-921E-35DE93E32DF4}"
+        "PackageCode" = "8:{9834E55A-6D4F-4C81-A779-9461140EDD11}"
         "UpgradeCode" = "8:{58B1B219-89C0-4B03-BFC7-DBC40E8B6CD6}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -243,7 +211,7 @@
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:0"
         "PreBuildEvent" = "8:"
-        "PostBuildEvent" = "8:"
+        "PostBuildEvent" = "8:IF \"$(Configuration)\" == \"Release\" ( \r\n\"C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.16299.0\\x86\\signtool.exe\" sign /fd sha256 /tr http://timestamp.comodoca.com/rfc3161 /td sha256 \"$(BuiltOuputPath)\" \"$(ProjectDir)$(Configuration)\\setup.exe\"\r\n)"
         "RunPostBuildEvent" = "3:0"
         }
         "Registry"
@@ -340,6 +308,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_52FEE9D5C34148F581339BC9A2F28E7F"
+            {
+            "Name" = "8:OKP1 Stationeers Editor"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_42EDA81B14834A68B04AB841A143AEA2"
+            "Folder" = "8:_ABBE890BDB3C4BD787AB58D0775A0735"
+            "WorkingFolder" = "8:_8CF7E3322B0D446BB0DEF11F868D2F65"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
