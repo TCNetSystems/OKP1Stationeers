@@ -216,7 +216,7 @@ namespace OKP1_Stationeers_Editor
                         break;
 
                     case ThingManager.ThingType.LockerItem:
-                        if (false) { // temp disable to get a working installer out
+                        { 
                             ThingLockerItem thingLockerItem = (ThingLockerItem)thing;
                             TabPage lockerItemTabPage;
                             // here we have to check for a null XML and if so stand up an empty item...

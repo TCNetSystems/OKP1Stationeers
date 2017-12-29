@@ -40,6 +40,36 @@ namespace OKP1_Stationeers_Editor
                 }
             }
         }
+        public int Quantity
+        {
+            get
+            {
+                if (XML == null)
+                {
+                    return -1;
+                }
+                if (XML.Element("Quantity") != null)
+                {
+                    return Int32.Parse(XML.Element("Quantity").Value);
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            set
+            {
+                if (XML == null)
+                {
+                    return;
+                }
+                // try to update the element...
+                if (XML.Element("Quantity") != null)
+                {
+                    XML.Element("Quantity").SetValue(value);
+                }
+            }
+        }
         public Int64 ParentReferenceId
         {
             get
