@@ -134,7 +134,7 @@ namespace OKP1_Stationeers_Editor
 
 
                 // found a machine.....maybe?  do not continue from this block as it is indeterminate...
-                if (thingType == "StructureSaveData" || thingType == "FabricatorSaveData")
+                if (thingType == "SimpleFabricatorSaveData")
                 {
                     XElement prefabName = ln.Element("PrefabName");
                     if (prefabName != null && Properties.Settings.Default.MachinePrefabs.Contains(prefabName.Value))
@@ -216,7 +216,7 @@ namespace OKP1_Stationeers_Editor
                         break;
 
                     case ThingManager.ThingType.LockerItem:
-                        if (false) { // temp disable to get a working installer out
+                        { 
                             ThingLockerItem thingLockerItem = (ThingLockerItem)thing;
                             TabPage lockerItemTabPage;
                             // here we have to check for a null XML and if so stand up an empty item...
@@ -393,5 +393,6 @@ namespace OKP1_Stationeers_Editor
                 }
             }
         }
+
     }
 }

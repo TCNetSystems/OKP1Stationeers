@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Players");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Lockers");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Machines");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Players");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Lockers");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Machines");
             this.EdMainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,7 +79,7 @@
             // 
             this.toolStripMenuFileOpen.Name = "toolStripMenuFileOpen";
             this.toolStripMenuFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.toolStripMenuFileOpen.Size = new System.Drawing.Size(155, 22);
+            this.toolStripMenuFileOpen.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuFileOpen.Text = "&Open...";
             this.toolStripMenuFileOpen.Click += new System.EventHandler(this.ToolStripMenuFileOpen_Click);
             // 
@@ -88,7 +88,7 @@
             this.toolStripMenuFileClose.Enabled = false;
             this.toolStripMenuFileClose.Name = "toolStripMenuFileClose";
             this.toolStripMenuFileClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.toolStripMenuFileClose.Size = new System.Drawing.Size(155, 22);
+            this.toolStripMenuFileClose.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuFileClose.Text = "&Close";
             this.toolStripMenuFileClose.Click += new System.EventHandler(this.ToolStripMenuClose_Click);
             // 
@@ -97,20 +97,20 @@
             this.toolStripMenuFileSave.Enabled = false;
             this.toolStripMenuFileSave.Name = "toolStripMenuFileSave";
             this.toolStripMenuFileSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.toolStripMenuFileSave.Size = new System.Drawing.Size(155, 22);
+            this.toolStripMenuFileSave.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuFileSave.Text = "&Save";
             this.toolStripMenuFileSave.Click += new System.EventHandler(this.toolStripMenuFileSave_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // toolStripMenuFileExit
             // 
             this.toolStripMenuFileExit.Name = "toolStripMenuFileExit";
             this.toolStripMenuFileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.toolStripMenuFileExit.Size = new System.Drawing.Size(155, 22);
+            this.toolStripMenuFileExit.Size = new System.Drawing.Size(180, 22);
             this.toolStripMenuFileExit.Text = "E&xit";
             this.toolStripMenuFileExit.Click += new System.EventHandler(this.ToolStripMenuFileExit_Click);
             // 
@@ -159,16 +159,16 @@
             this.treeViewNavLeft.Enabled = false;
             this.treeViewNavLeft.Location = new System.Drawing.Point(0, 0);
             this.treeViewNavLeft.Name = "treeViewNavLeft";
-            treeNode7.Name = "Players";
-            treeNode7.Text = "Players";
-            treeNode8.Name = "Lockers";
-            treeNode8.Text = "Lockers";
-            treeNode9.Name = "Machines";
-            treeNode9.Text = "Machines";
+            treeNode1.Name = "Players";
+            treeNode1.Text = "Players";
+            treeNode2.Name = "Lockers";
+            treeNode2.Text = "Lockers";
+            treeNode3.Name = "Machines";
+            treeNode3.Text = "Machines";
             this.treeViewNavLeft.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8,
-            treeNode9});
+            treeNode1,
+            treeNode2,
+            treeNode3});
             this.treeViewNavLeft.Size = new System.Drawing.Size(271, 510);
             this.treeViewNavLeft.TabIndex = 0;
             this.treeViewNavLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewNavLeft_AfterSelect);
