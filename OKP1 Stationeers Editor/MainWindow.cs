@@ -134,7 +134,7 @@ namespace OKP1_Stationeers_Editor
 
 
                 // found a machine.....maybe?  do not continue from this block as it is indeterminate...
-                if (thingType == "StructureSaveData" || thingType == "FabricatorSaveData")
+                if (thingType == "SimpleFabricatorSaveData")
                 {
                     XElement prefabName = ln.Element("PrefabName");
                     if (prefabName != null && Properties.Settings.Default.MachinePrefabs.Contains(prefabName.Value))
@@ -393,5 +393,6 @@ namespace OKP1_Stationeers_Editor
                 }
             }
         }
+
     }
 }
