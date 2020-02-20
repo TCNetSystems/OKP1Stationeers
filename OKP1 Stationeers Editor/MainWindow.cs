@@ -216,6 +216,7 @@ namespace OKP1_Stationeers_Editor
                         break;
 
                     case ThingManager.ThingType.LockerItem:
+                        break;
                         { 
                             ThingLockerItem thingLockerItem = (ThingLockerItem)thing;
                             TabPage lockerItemTabPage;
