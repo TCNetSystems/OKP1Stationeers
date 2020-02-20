@@ -187,15 +187,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:OKP1 Stationeers Editor"
-        "ProductCode" = "8:{70166142-0D86-4A9B-8BA6-79399EF801E7}"
-        "PackageCode" = "8:{F2370F09-CC3A-475F-9D83-4299990FA303}"
+        "ProductCode" = "8:{33D98EE8-BD66-44F4-9A2E-14957C49A3CF}"
+        "PackageCode" = "8:{998E3952-C2F5-49A0-A704-48C0609AD745}"
         "UpgradeCode" = "8:{58B1B219-89C0-4B03-BFC7-DBC40E8B6CD6}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.0.3"
+        "ProductVersion" = "8:0.0.4"
         "Manufacturer" = "8:TCNet Systems"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -723,7 +723,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_42EDA81B14834A68B04AB841A143AEA2"
             {
-            "SourcePath" = "8:..\\OKP1 Stationeers Editor\\obj\\Release\\OKP1 Stationeers Editor.exe"
+            "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_8CF7E3322B0D446BB0DEF11F868D2F65"
