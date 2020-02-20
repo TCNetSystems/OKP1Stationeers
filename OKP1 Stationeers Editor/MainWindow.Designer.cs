@@ -171,7 +171,7 @@
             treeNode3});
             this.treeViewNavLeft.Size = new System.Drawing.Size(271, 510);
             this.treeViewNavLeft.TabIndex = 0;
-            this.treeViewNavLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewNavLeft_AfterSelect);
+            this.treeViewNavLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewNavLeft_AfterSelect);
             // 
             // rightEditTab
             // 
