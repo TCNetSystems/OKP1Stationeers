@@ -93,7 +93,7 @@ namespace OKP1_Stationeers_Editor
             UInt64 newMaxRefVal = 0;
 
             treeViewNavLeft.BeginUpdate();
-            doTreeCleanup();
+            DoTreeCleanup();
 
             // Run through and find the highest reference ID, lockers..etc...
             TreeNode treeLocker = treeViewNavLeft.Nodes["Lockers"];
@@ -153,7 +153,7 @@ namespace OKP1_Stationeers_Editor
 
         }
 
-        private void doTreeCleanup()
+        private void DoTreeCleanup()
         {
             treeViewNavLeft.BeginUpdate();
             treeViewNavLeft.CollapseAll();
@@ -164,12 +164,12 @@ namespace OKP1_Stationeers_Editor
             treeViewNavLeft.EndUpdate();
         }
 
-        private void doCloseCleanup()
+        private void DoCloseCleanup()
         {
             // close open tabs....I'm really not clear if this Dispose()s of things...
             rightEditTab.TabPages.Clear();
 
-            doTreeCleanup();
+            DoTreeCleanup();
 
             World = null;
             WorldStream.Close();
@@ -184,11 +184,11 @@ namespace OKP1_Stationeers_Editor
         private void ToolStripMenuClose_Click(object sender, EventArgs e)
         {
             toolStripStatusOpenedFileLabel.Text = "No file...";
-            doCloseCleanup();
+            DoCloseCleanup();
         }
 
 
-        private void treeViewNavLeft_AfterSelect(object sender, TreeViewEventArgs e)
+        private void TreeViewNavLeft_AfterSelect(object sender, TreeViewEventArgs e)
         {
             TreeView tree = (TreeView)sender;
             TreeNode sel = tree.SelectedNode;
@@ -265,8 +265,10 @@ namespace OKP1_Stationeers_Editor
                             string tabKey = $"{thingMachine.Id} Reagents";
                             if (!rightEditTab.TabPages.ContainsKey(tabKey))
                             {
-                                machineReagentsPage = new TabPage(tabKey);
-                                machineReagentsPage.Name = tabKey;
+                                machineReagentsPage = new TabPage(tabKey)
+                                {
+                                    Name = tabKey
+                                };
                                 machineReagentsPage.Controls.Add(new ReagentEdit(thingMachine));
                                 rightEditTab.TabPages.Add(machineReagentsPage);
                                 rightEditTab.SelectTab(machineReagentsPage);
@@ -279,7 +281,7 @@ namespace OKP1_Stationeers_Editor
                         break;
 
                     default:
-                        Console.WriteLine("Shit! Unknown Thing Type in treeViewNavLeft_AfterSelect [{0}]", thing.TypeOf);
+                        Console.WriteLine("Shit! Unknown Thing Type in TreeViewNavLeft_AfterSelect [{0}]", thing.TypeOf);
                         break;
                 }
             }
