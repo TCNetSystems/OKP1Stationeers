@@ -31,16 +31,20 @@
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Players");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Lockers");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Machines");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Tanks");
             this.EdMainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuFileClose = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuFileSave = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuFileLoadData = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuFileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusOpenedFileLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelMaxRef = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabelGameVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeViewNavLeft = new System.Windows.Forms.TreeView();
             this.rightEditTab = new System.Windows.Forms.TabControl();
@@ -70,6 +74,8 @@
             this.toolStripMenuFileClose,
             this.toolStripMenuFileSave,
             this.toolStripSeparator1,
+            this.toolStripMenuFileLoadData,
+            this.toolStripSeparator2,
             this.toolStripMenuFileExit});
             this.toolStripMenuFile.Name = "toolStripMenuFile";
             this.toolStripMenuFile.Size = new System.Drawing.Size(37, 20);
@@ -79,7 +85,7 @@
             // 
             this.toolStripMenuFileOpen.Name = "toolStripMenuFileOpen";
             this.toolStripMenuFileOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.toolStripMenuFileOpen.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuFileOpen.Size = new System.Drawing.Size(206, 22);
             this.toolStripMenuFileOpen.Text = "&Open...";
             this.toolStripMenuFileOpen.Click += new System.EventHandler(this.ToolStripMenuFileOpen_Click);
             // 
@@ -88,7 +94,7 @@
             this.toolStripMenuFileClose.Enabled = false;
             this.toolStripMenuFileClose.Name = "toolStripMenuFileClose";
             this.toolStripMenuFileClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.toolStripMenuFileClose.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuFileClose.Size = new System.Drawing.Size(206, 22);
             this.toolStripMenuFileClose.Text = "&Close";
             this.toolStripMenuFileClose.Click += new System.EventHandler(this.ToolStripMenuClose_Click);
             // 
@@ -97,20 +103,33 @@
             this.toolStripMenuFileSave.Enabled = false;
             this.toolStripMenuFileSave.Name = "toolStripMenuFileSave";
             this.toolStripMenuFileSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.toolStripMenuFileSave.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuFileSave.Size = new System.Drawing.Size(206, 22);
             this.toolStripMenuFileSave.Text = "&Save";
             this.toolStripMenuFileSave.Click += new System.EventHandler(this.toolStripMenuFileSave_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(203, 6);
+            // 
+            // toolStripMenuFileLoadData
+            // 
+            this.toolStripMenuFileLoadData.Name = "toolStripMenuFileLoadData";
+            this.toolStripMenuFileLoadData.Size = new System.Drawing.Size(206, 22);
+            this.toolStripMenuFileLoadData.Text = "Load Autocomplete Data";
+            this.toolStripMenuFileLoadData.ToolTipText = "Downloads autocomplete data from stationeering.com";
+            this.toolStripMenuFileLoadData.Click += new System.EventHandler(this.toolStripMenuFileLoadData_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(203, 6);
             // 
             // toolStripMenuFileExit
             // 
             this.toolStripMenuFileExit.Name = "toolStripMenuFileExit";
             this.toolStripMenuFileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.toolStripMenuFileExit.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuFileExit.Size = new System.Drawing.Size(206, 22);
             this.toolStripMenuFileExit.Text = "E&xit";
             this.toolStripMenuFileExit.Click += new System.EventHandler(this.ToolStripMenuFileExit_Click);
             // 
@@ -118,7 +137,8 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusOpenedFileLabel,
-            this.toolStripStatusLabelMaxRef});
+            this.toolStripStatusLabelMaxRef,
+            this.toolStripStatusLabelGameVersion});
             this.statusStrip1.Location = new System.Drawing.Point(0, 534);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(813, 22);
@@ -135,6 +155,11 @@
             // 
             this.toolStripStatusLabelMaxRef.Name = "toolStripStatusLabelMaxRef";
             this.toolStripStatusLabelMaxRef.Size = new System.Drawing.Size(0, 17);
+            // 
+            // toolStripStatusLabelGameVersion
+            // 
+            this.toolStripStatusLabelGameVersion.Name = "toolStripStatusLabelGameVersion";
+            this.toolStripStatusLabelGameVersion.Size = new System.Drawing.Size(0, 17);
             // 
             // splitContainer1
             // 
@@ -165,10 +190,13 @@
             treeNode2.Text = "Lockers";
             treeNode3.Name = "Machines";
             treeNode3.Text = "Machines";
+            treeNode4.Name = "Tanks";
+            treeNode4.Text = "Tanks";
             this.treeViewNavLeft.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2,
-            treeNode3});
+            treeNode3,
+            treeNode4});
             this.treeViewNavLeft.Size = new System.Drawing.Size(271, 510);
             this.treeViewNavLeft.TabIndex = 0;
             this.treeViewNavLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewNavLeft_AfterSelect);
@@ -205,6 +233,7 @@
             this.Name = "MainWindow";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "OKP1 Stationeers Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainWindow_Closing);
             this.EdMainMenuStrip.ResumeLayout(false);
             this.EdMainMenuStrip.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -234,5 +263,8 @@
         private System.Windows.Forms.TabControl rightEditTab;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelMaxRef;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelGameVersion;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuFileLoadData;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

@@ -1,0 +1,25 @@
+<AtmosphereSaveData>
+    <Position>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+    </Position>
+    <Oxygen>0</Oxygen>
+    <Nitrogen>0</Nitrogen>
+    <CarbonDioxide>0</CarbonDioxide>
+    <Volatiles>0</Volatiles>
+    <Chlorine>0</Chlorine>
+    <Water>0</Water>
+    <NitrousOxide>0</NitrousOxide>
+    <Energy>0</Energy>
+    <Volume>0</Volume>
+    <Direction>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+    </Direction>
+    <NetworkReferenceId>0</NetworkReferenceId>
+    <ThingReferenceId>0</ThingReferenceId>
+    <CleanBurnRate>0</CleanBurnRate>
+    <MothershipReferenceId>0</MothershipReferenceId>
+</AtmosphereSaveData>

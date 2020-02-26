@@ -11,6 +11,7 @@ namespace OKP1_Stationeers_Editor
     public class ThingLockerItem : ThingManager
     {
 
+        private bool _storedToParentTree = false;
         public int ParentSlotId
         {
             get
@@ -131,6 +132,8 @@ namespace OKP1_Stationeers_Editor
             }
         }
 
+        public bool StoredToParentTree { get => _storedToParentTree; set => _storedToParentTree = value; }
+
         public ThingLockerItem() : base()
         {
             _typeOf = ThingType.LockerItem;
@@ -167,12 +170,23 @@ namespace OKP1_Stationeers_Editor
 
             PrefabName = "StructureTypeUninit";
 
-            parentLockerXML.Add(newXML);
+            // Do not add to parent until saved....
+            // parentLockerXML.Add(newXML);
             _name = _genName();
             
 
             return true;
 
+        }
+
+        public override void Save()
+        {
+            base.Save();
+            if(!_storedToParentTree && _parentXML != null)
+            {
+                _parentXML.Add(_xmlThing);
+                _storedToParentTree = true;
+            }
         }
     }
 

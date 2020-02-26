@@ -61,6 +61,36 @@ namespace OKP1_Stationeers_Editor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;AtmosphereSaveData&gt;
+        ///    &lt;Position&gt;
+        ///        &lt;x&gt;0&lt;/x&gt;
+        ///        &lt;y&gt;0&lt;/y&gt;
+        ///        &lt;z&gt;0&lt;/z&gt;
+        ///    &lt;/Position&gt;
+        ///    &lt;Oxygen&gt;0&lt;/Oxygen&gt;
+        ///    &lt;Nitrogen&gt;0&lt;/Nitrogen&gt;
+        ///    &lt;CarbonDioxide&gt;0&lt;/CarbonDioxide&gt;
+        ///    &lt;Volatiles&gt;0&lt;/Volatiles&gt;
+        ///    &lt;Chlorine&gt;0&lt;/Chlorine&gt;
+        ///    &lt;Water&gt;0&lt;/Water&gt;
+        ///    &lt;NitrousOxide&gt;0&lt;/NitrousOxide&gt;
+        ///    &lt;Energy&gt;0&lt;/Energy&gt;
+        ///    &lt;Volume&gt;0&lt;/Volume&gt;
+        ///    &lt;Direction&gt;
+        ///        &lt;x&gt;0&lt;/x&gt;
+        ///        &lt;y&gt;0&lt;/y&gt;
+        ///        &lt;z&gt;0&lt;/z&gt;
+        ///    &lt;/Direction&gt;
+        ///    &lt;NetworkReferenceId&gt;0&lt;/NetworkReferenceId&gt;
+        ///    &lt;ThingRe [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AtmosphereSaveDataTemplate {
+            get {
+                return ResourceManager.GetString("AtmosphereSaveDataTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap CloseXSmall {

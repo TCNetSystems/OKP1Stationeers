@@ -1,23 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+// using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
+// using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace OKP1_Stationeers_Editor
 {
-    public partial class MainWindow : Form
+     public partial class MainWindow : Form
     {
         private FileStream WorldStream = null;
         private XDocument World = null;
         private bool WorldIsModified = false;
+        private string _recipeDataFile = null;
+        
+        public static readonly HttpClient httpClient = new HttpClient();
+
+
         public UInt64 MaxThingRefId
         {
             get
@@ -28,16 +37,46 @@ namespace OKP1_Stationeers_Editor
             {
                 _maxThingRefId = value;
                 // update tooltip...
-                toolStripStatusLabelMaxRef.Text = $"Max Ref: {value}";
+                if(value != 0)
+                {
+                    toolStripStatusLabelMaxRef.Text = $"Max Ref: {value}";
+                } else
+                {
+                    toolStripStatusLabelMaxRef.Text = "";
+                }
+                
             }
         }
+
+        protected string RecipeDataETag {
+            get => Properties.Settings.Default.RecipeDataETag;
+
+            set {
+
+                Properties.Settings.Default.RecipeDataETag = value;
+            }
+
+        }
+
+        protected DateTime RecipeDataRefreshedAt {
+            get => Properties.Settings.Default.RecipeDataRefreshedAt;
+
+            set
+            {
+                Properties.Settings.Default.RecipeDataRefreshedAt = value;
+            }
+
+        }
+
         private static UInt64 _maxThingRefId = 0;
 
 
         public MainWindow()
         {
             InitializeComponent();
-            
+            string[] pathData = { Application.UserAppDataPath, "recipes-public.json" };
+
+            _recipeDataFile = Path.Combine(pathData);
         }
 
         private void ToolStripMenuFileExit_Click(object sender, EventArgs e)
@@ -48,15 +87,23 @@ namespace OKP1_Stationeers_Editor
             {
                 if (WorldIsModified)
                 {
-                    // bitch
+                    if(MessageBox.Show("Quit without saving?", "Quit without saving world?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        WorldStream.Close();
+                        Application.Exit();
+                    } else
+                    {
+                        return;
+                    }
                 }
+
                 WorldStream.Close();
             }
 
             Application.Exit();
         }
 
-        private void ToolStripMenuFileOpen_Click(object sender, EventArgs e)
+        private async void ToolStripMenuFileOpen_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "World File|world.xml|All XML (*.xml)|*.xml";
@@ -68,7 +115,7 @@ namespace OKP1_Stationeers_Editor
                 Cursor.Current = Cursors.WaitCursor;
                 toolStripStatusOpenedFileLabel.Text = openFileDialog.FileName;
                 WorldStream = File.Open(toolStripStatusOpenedFileLabel.Text, FileMode.Open, FileAccess.ReadWrite);
-                World = XDocument.Load(WorldStream);
+                World = XDocument.Load(WorldStream, LoadOptions.PreserveWhitespace);
                 toolStripMenuFileClose.Enabled = true;
                 toolStripMenuFileOpen.Enabled = false;
                 World.Changed += new EventHandler<XObjectChangeEventArgs>(
@@ -78,6 +125,20 @@ namespace OKP1_Stationeers_Editor
                         toolStripMenuFileSave.Enabled = true;
                     }
                 );
+
+                // See if we've got recipe data file and fetch it if not...
+                if(!File.Exists(_recipeDataFile))
+                {
+                    HttpResponseMessage response;
+                    response = await FetchRecipes();
+                    DoRecipeDataCompletion(response);
+                }
+
+                if(GlobData._recipesDataFile == null)
+                {
+                    DoAutoCompleterLoad();
+                }
+
                 CompleteLoading();
                 treeViewNavLeft.Enabled = true;
                 Cursor.Current = Cursors.Default;
@@ -92,13 +153,35 @@ namespace OKP1_Stationeers_Editor
 
             UInt64 newMaxRefVal = 0;
 
+            // Take a peek at the version information...
+            XElement gameVersion = World.Element("WorldData").Element("GameVersion");
+            toolStripStatusLabelGameVersion.Text = $"Game: {gameVersion.Value}";
+
             treeViewNavLeft.BeginUpdate();
             DoTreeCleanup();
 
+            // Populate atosphere data...
+            
+            GlobData._atmosphereDataByThing.Clear();
+
+            var atmospheres = from ln in World.Element("WorldData").Element("Atmospheres").Elements()
+                              select ln;
+            foreach (XElement ln in atmospheres)
+            {
+                // Check if ThingReferenceId > 0...
+                Int64 thingRefId = Int64.Parse(ln.Element("ThingReferenceId").Value);
+                if(thingRefId > 0)
+                {
+                    GlobData._atmosphereDataByThing[thingRefId] = ln;
+                }
+            }
+            atmospheres = null;
+
             // Run through and find the highest reference ID, lockers..etc...
-            TreeNode treeLocker = treeViewNavLeft.Nodes["Lockers"];
-            TreeNode treeMachines = treeViewNavLeft.Nodes["Machines"];
-            var things = from ln in World.Descendants("ThingSaveData")
+            // Precompile Tank regex...
+            Regex tankRegex = new Regex(@"^((DynamicGasCanister)|(ItemGasCanister)|(StructureTank(Big|Small)))",RegexOptions.Compiled | RegexOptions.CultureInvariant);
+
+            var things = from ln in World.Element("WorldData").Element("Things").Elements()
                          select ln;
             foreach (XElement ln in things)
             {
@@ -114,39 +197,65 @@ namespace OKP1_Stationeers_Editor
 
                 // found a locker ?
                 string thingType = (string)ln.Attributes().FirstOrDefault(a => a.Name.LocalName == "type");
-                if (thingType == "StructureSaveData" && ln.Element("PrefabName").Value == "StructureStorageLocker")
+                XElement prefabName = ln.Element("PrefabName");
+                
+
+
+                switch (thingType)
                 {
-                    ThingLocker thing = new ThingLocker(ln);
-                    TreeNode thisNode = treeLocker.Nodes.Add(thing.Id.ToString(), thing.Name);
-                    thisNode.Tag = thing;
-                    LockerTreeViewAddChildNodes(thisNode.Nodes, thing);
-                    continue;
+                    case "StructureSaveData":
+                        if (prefabName.Value == "StructureStorageLocker")
+                        {
+                            ThingLocker thing = new ThingLocker(ln);
+                            TreeNode thisNode = treeViewNavLeft.Nodes["Lockers"].Nodes.Add(thing.Id.ToString(), thing.Name);
+                            thisNode.Tag = thing;
+                            LockerTreeViewAddChildNodes(thisNode.Nodes, thing);
+                            continue;
+                        }
+                        break;
+
+                    case "HumanSaveData":
+                        {
+                            ThingPlayer thing = new ThingPlayer(ln);
+                            TreeNode thisnode = treeViewNavLeft.Nodes["Players"].Nodes.Add(thing.Id.ToString(), thing.Name);
+                            thisnode.Tag = thing;
+                        }
+                        break;
+
+                    case "SimpleFabricatorSaveData":
+                        if (prefabName != null && Properties.Settings.Default.MachinePrefabs.Contains(prefabName.Value))
+                        {
+                            ThingMachine thing = new ThingMachine(ln);
+                            TreeNode thisNode = treeViewNavLeft.Nodes["Machines"].Nodes.Add(thing.Id.ToString(), thing.Name);
+                            thisNode.Tag = thing;
+
+                        }
+                        break;
+
+                    case "DynamicThingSaveData": // That type will get us into trouble with this switch later...  a goto case will help
+                    case "DynamicGasCanisterSaveData":
+                    case "DeviceAtmosphericSaveData":
+                        // Fixed tanks?
+                        Match fixedTank = tankRegex.Match(prefabName.Value);
+                        if (fixedTank.Success)
+                        {
+                            // Tanks find atmo data on their own...
+                            ThingAtmosphere thing = new ThingAtmosphere(ln);
+                            TreeNode thisNode = treeViewNavLeft.Nodes["Tanks"].Nodes.Add(thing.Id.ToString(), thing.Name);
+                            thisNode.Tag = thing;
+                        }
+
+                        break;
+
+
+                    default:
+
+                        break;
                 }
-
-                // found a player ?
-                if (thingType == "HumanSaveData")
-                {
-                    ThingPlayer thing = new ThingPlayer(ln);
-                    TreeNode thisnode = treeViewNavLeft.Nodes["Players"].Nodes.Add(thing.Id.ToString(), thing.Name);
-                    thisnode.Tag = thing;
-                    continue;
-                }
-
-
-                // found a machine.....maybe?  do not continue from this block as it is indeterminate...
-                if (thingType == "SimpleFabricatorSaveData")
-                {
-                    XElement prefabName = ln.Element("PrefabName");
-                    if (prefabName != null && Properties.Settings.Default.MachinePrefabs.Contains(prefabName.Value))
-                    {
-                        ThingMachine thing = new ThingMachine(ln);
-                        TreeNode thisNode = treeMachines.Nodes.Add(thing.Id.ToString(), thing.Name);
-                        thisNode.Tag = thing;
-                        
-                    }
-                }
-
             }
+            
+            things = null;
+
             treeViewNavLeft.EndUpdate();
             MaxThingRefId = newMaxRefVal;
 
@@ -166,6 +275,8 @@ namespace OKP1_Stationeers_Editor
 
         private void DoCloseCleanup()
         {
+            toolStripStatusOpenedFileLabel.Text = "No file...";
+            toolStripStatusLabelGameVersion.Text = "";
             // close open tabs....I'm really not clear if this Dispose()s of things...
             rightEditTab.TabPages.Clear();
 
@@ -183,7 +294,13 @@ namespace OKP1_Stationeers_Editor
         }
         private void ToolStripMenuClose_Click(object sender, EventArgs e)
         {
-            toolStripStatusOpenedFileLabel.Text = "No file...";
+            if(WorldIsModified)
+            {
+                if (MessageBox.Show("Close without saving?", "Close without saving world?", MessageBoxButtons.YesNo) == DialogResult.No)
+                {
+                    return;
+                }
+            }
             DoCloseCleanup();
         }
 
@@ -216,7 +333,6 @@ namespace OKP1_Stationeers_Editor
                         break;
 
                     case ThingManager.ThingType.LockerItem:
-                        break;
                         { 
                             ThingLockerItem thingLockerItem = (ThingLockerItem)thing;
                             TabPage lockerItemTabPage;
@@ -262,7 +378,7 @@ namespace OKP1_Stationeers_Editor
                             ThingMachine thingMachine = (ThingMachine)thing;
                             TabPage machineReagentsPage;
                             // see if it's already open...
-                            string tabKey = $"{thingMachine.Id} Reagents";
+                            string tabKey = $"{thingMachine.Id} {thingMachine.GivenName} Reagents";
                             if (!rightEditTab.TabPages.ContainsKey(tabKey))
                             {
                                 machineReagentsPage = new TabPage(tabKey)
@@ -277,6 +393,32 @@ namespace OKP1_Stationeers_Editor
                             {
                                 rightEditTab.SelectTab(tabKey);
                             }
+                        }
+                        break;
+
+                    case ThingManager.ThingType.Tank:
+                        {
+                            ThingAtmosphere thingAtmosphere = (ThingAtmosphere)thing;
+                            TabPage atmosphereThingPage;
+                            string tabKey = $"{thingAtmosphere.Id} Tank {thingAtmosphere.GivenName}";
+                            if(!rightEditTab.TabPages.ContainsKey(tabKey))
+                            {
+                                atmosphereThingPage = new TabPage(tabKey)
+                                {
+                                    Name = tabKey
+                                };
+
+                                // Add/build control page...
+                                atmosphereThingPage.Controls.Add(new AtmosphereEdit(thingAtmosphere));
+
+                                rightEditTab.TabPages.Add(atmosphereThingPage);
+                                rightEditTab.SelectTab(atmosphereThingPage);
+
+                            } else
+                            {
+                                rightEditTab.SelectTab(tabKey);
+                            }
+
                         }
                         break;
 
@@ -397,5 +539,125 @@ namespace OKP1_Stationeers_Editor
             }
         }
 
+        private async Task<HttpResponseMessage> FetchRecipes()
+        {
+            HttpResponseMessage response;
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, Properties.Settings.Default.RecipeDataUrl);
+            requestMessage.Headers.Accept.Clear();
+            requestMessage.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
+            if(RecipeDataETag != null && RecipeDataETag.Length >= 1)
+            {
+                requestMessage.Headers.Add("If-None-Match", RecipeDataETag);
+            }
+
+            response = await httpClient.SendAsync(requestMessage);
+            return response;
+        }
+
+        private async void toolStripMenuFileLoadData_Click(object sender, EventArgs e)
+        {
+            HttpResponseMessage response;
+
+            // Check to make sure that it's been more than at least a couple of hours...
+            DateTime current = DateTime.UtcNow;
+            DateTime future = RecipeDataRefreshedAt.AddHours(2);
+            if( current < future)
+            {
+                Console.WriteLine($"Tried to fetch too soon {current} < {future}");
+                MessageBox.Show("Cannot comply, wait a couple of hours!");
+                return;
+            }
+
+            toolStripMenuFileLoadData.Enabled = false;
+            // UI thread will go off for other things...
+            response = await FetchRecipes();
+
+            // Back in control of the UI thread...
+            toolStripMenuFileLoadData.Enabled = true;
+
+            DoRecipeDataCompletion(response);
+            
+        }
+
+        private async void DoRecipeDataCompletion(HttpResponseMessage response)
+        {
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.NotModified:
+                    RecipeDataRefreshedAt = DateTime.UtcNow;
+                    break;
+
+                case HttpStatusCode.OK:
+
+                    // Load out data to file
+
+                    if (File.Exists(_recipeDataFile))
+                    {
+                        File.Delete(_recipeDataFile);
+                    }
+                    FileStream dataFile = File.Open(_recipeDataFile, FileMode.CreateNew, FileAccess.ReadWrite);
+                    byte[] recipeData = await response.Content.ReadAsByteArrayAsync();
+                    await dataFile.WriteAsync(recipeData, 0, recipeData.Length);
+                    dataFile.Close();
+
+                    // Mark it...
+                    RecipeDataRefreshedAt = DateTime.UtcNow;
+                    RecipeDataETag = response.Headers.ETag.ToString();
+
+                    // Import into autocompleters....
+                    DoAutoCompleterLoad();
+                    break;
+
+                default:
+                    // Wha? Show a message box...
+                    MessageBox.Show($"Unknown Response while fetching recipe data {response.StatusCode}");
+                    break;
+
+            }
+        }
+
+        private void DoAutoCompleterLoad()
+        {
+
+            
+            try
+            {
+                string recipesData = File.ReadAllText(_recipeDataFile);
+                // try to deserialize it....
+                RecipeDataFile recipesDataFile = JsonConvert.DeserializeObject<RecipeDataFile>(recipesData);
+                Console.WriteLine($"Loaded {recipesDataFile.branch} from {recipesDataFile.updated_time} with {recipesDataFile.recipes.Count()}");
+                GlobData._recipesDataFile = recipesDataFile;
+            } catch (FileNotFoundException)
+            {
+                Console.WriteLine($"Unable to load recipe data file from {_recipeDataFile}");
+                return;
+            }
+
+            // Massage into a dictionary...
+            GlobData.Recipes.Clear();
+            foreach(ItemRecipe ri in GlobData._recipesDataFile.recipes)
+            {
+
+                // Instead of exception try/catch, explicitly look
+
+                if(GlobData.Recipes.ContainsKey(ri.item))
+                {
+                    GlobData.Recipes[ri.item].Add(ri);
+                } else
+                {
+                    List<ItemRecipe> rl = new List<ItemRecipe>();
+                    rl.Add(ri);
+                    GlobData.Recipes.Add(ri.item, rl);
+                }
+            }
+            return;
+        }
+
+        private void MainWindow_Closing(object sender, FormClosingEventArgs e)
+        {
+            // Save out our settings
+            Properties.Settings.Default.Save();
+        }
     }
+
 }

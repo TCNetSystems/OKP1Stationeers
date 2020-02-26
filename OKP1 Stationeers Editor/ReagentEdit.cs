@@ -59,8 +59,11 @@ namespace OKP1_Stationeers_Editor
             thing.TypeName = textBoxReagent.Text;
             // this will throw an exception on garbage
             thing.Quantity = Single.Parse(textBoxQuantity.Text);
+            thing.Save();
             buttonSave.Enabled = false;
             buttonCancel.Enabled = false;
+            // refresh list item information.....
+            listBoxReagents.DataSource = machine.GetReagents();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
