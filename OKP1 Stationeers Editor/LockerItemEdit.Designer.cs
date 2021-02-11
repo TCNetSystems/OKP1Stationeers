@@ -72,6 +72,7 @@
             this.AutoScroll = true;
             this.AutoSize = true;
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "LockerItemEdit";
             this.Size = new System.Drawing.Size(530, 484);
             this.tableLayoutPanel1.ResumeLayout(false);

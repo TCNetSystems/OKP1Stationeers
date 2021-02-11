@@ -521,21 +521,29 @@ namespace OKP1_Stationeers_Editor
 
         private void rightEditTab_MouseClick(object sender, MouseEventArgs e)
         {
-            for (var i = 0; i < this.rightEditTab.TabPages.Count; i++)
+            if (e.Button == MouseButtons.Left)
             {
-                var tabRect = this.rightEditTab.GetTabRect(i);
-                tabRect.Inflate(-2, -2);
-                var closeImage = Properties.Resources.CloseXSmall;
-                var imageRect = new Rectangle(
-                    (tabRect.Right - closeImage.Width),
-                    tabRect.Top + (tabRect.Height - closeImage.Height) / 2,
-                    closeImage.Width,
-                    closeImage.Height);
-                if (imageRect.Contains(e.Location))
+                for (var i = 0; i < this.rightEditTab.TabPages.Count; i++)
                 {
-                    this.rightEditTab.TabPages.RemoveAt(i);
-                    break;
+                    var tabRect = this.rightEditTab.GetTabRect(i);
+                    tabRect.Inflate(-2, -2);
+                    var closeImage = Properties.Resources.CloseXSmall;
+                    var imageRect = new Rectangle(
+                        (tabRect.Right - closeImage.Width),
+                        tabRect.Top + (tabRect.Height - closeImage.Height) / 2,
+                        closeImage.Width,
+                        closeImage.Height);
+                    if (imageRect.Contains(e.Location))
+                    {
+                        this.rightEditTab.TabPages.RemoveAt(i);
+                        break;
+                    }
                 }
+            }
+            if(e.Button == MouseButtons.Middle)
+            {
+                TabControl tab = sender as TabControl;
+                rightEditTab.TabPages.Remove(tab.TabPages[0]);
             }
         }
 
@@ -657,6 +665,13 @@ namespace OKP1_Stationeers_Editor
         {
             // Save out our settings
             Properties.Settings.Default.Save();
+            if (toolStripMenuFileSave.Enabled)
+            {
+                if(MessageBox.Show("You did not save your world file before closing the application. Would you like to save it?", "Save file?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    toolStripMenuFileSave_Click(toolStripMenuFileSave, new EventArgs());
+                }
+            }
         }
     }
 
