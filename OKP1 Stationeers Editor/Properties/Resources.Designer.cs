@@ -82,7 +82,7 @@ namespace OKP1_Stationeers_Editor.Properties {
         ///        &lt;z&gt;0&lt;/z&gt;
         ///    &lt;/Direction&gt;
         ///    &lt;NetworkReferenceId&gt;0&lt;/NetworkReferenceId&gt;
-        ///    &lt;ThingRe [rest of string was truncated]&quot;;.
+        ///    &lt;ThingReferenceId&gt;0&lt;/ThingRef [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AtmosphereSaveDataTemplate {
             get {
@@ -136,7 +136,8 @@ namespace OKP1_Stationeers_Editor.Properties {
         ///  &lt;CustomColorIndex&gt;-1&lt;/CustomColorIndex&gt;
         ///  &lt;OwnerSteamId&gt;0&lt;/OwnerSteamId&gt;
         ///  &lt;Reagents /&gt;
-        ///  &lt;Indestructable&gt; [rest of string was truncated]&quot;;.
+        ///  &lt;Indestructable&gt;false&lt;/Indestructable&gt;
+        ///   [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LockerItemTemplate {
             get {
