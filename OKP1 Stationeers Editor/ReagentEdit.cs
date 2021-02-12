@@ -127,7 +127,15 @@ namespace OKP1_Stationeers_Editor
             }
         }
 
-
+        private void buttonTopUp_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < listBoxReagents.Items.Count; i++)
+            {
+                listBoxReagents.SelectedIndex = i;
+                textBoxQuantity.Text = "500";
+                buttonSave_Click(buttonSave, e);
+            }
+        }
     }
 }
 
