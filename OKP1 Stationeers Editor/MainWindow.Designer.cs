@@ -32,6 +32,7 @@
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Lockers");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Machines");
             System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Tanks");
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.EdMainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuFileOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -229,6 +230,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.EdMainMenuStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.EdMainMenuStrip;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
