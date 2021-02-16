@@ -353,9 +353,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:OKP1 Stationeers Editor Setup"
+        "ProductName" = "8:OKP1 Stationeers Editor"
         "ProductCode" = "8:{E2ECBEAC-27BF-4DFE-8E21-0C7C787BE013}"
-        "PackageCode" = "8:{FD8D1B42-5AA4-48F6-BAE5-A3025F210BA0}"
+        "PackageCode" = "8:{2FAAC814-52C9-4CB7-957E-7696458DDC17}"
         "UpgradeCode" = "8:{90320299-5C3A-4C0C-9EA5-D49EA3E26ACA}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -481,12 +481,12 @@
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
+            "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
             "Target" = "8:_3FD3CDD281524025951184E9A92580D3"
             "Folder" = "8:_FE97278EA42E49689EEA2AF28190119D"
             "WorkingFolder" = "8:_B6C8BCCC300F4894A60DE12DA09A1ABC"
-            "Icon" = "8:"
+            "Icon" = "8:_3FD3CDD281524025951184E9A92580D3"
             "Feature" = "8:"
             }
         }
