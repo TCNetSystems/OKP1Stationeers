@@ -5,7 +5,12 @@ VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OKP1 Stationeers Editor", "OKP1 Stationeers Editor\OKP1 Stationeers Editor.csproj", "{33F010F0-C6F4-4296-B599-9721658EC080}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "OKP1 Stationeers Editor NGSetup", "OKP1 Stationeers Editor Setup\OKP1 Stationeers Editor Setup.vdproj", "{CB527BBF-F293-45C3-8788-A358BC210CA4}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "OKP1 Stationeers Editor Setup", "OKP1 Stationeers Editor Setup\OKP1 Stationeers Editor Setup.vdproj", "{CB527BBF-F293-45C3-8788-A358BC210CA4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{331F919D-52D7-4698-8EAD-2059B287BC96}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
