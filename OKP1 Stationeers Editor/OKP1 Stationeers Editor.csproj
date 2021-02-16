@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>OKP1_Stationeers_Editor</RootNamespace>
     <AssemblyName>OKP1 Stationeers Editor</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -67,6 +67,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -172,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="AtmosphereSaveDataTemplate.xml" />
+    <Content Include="icon.ico" />
     <Content Include="LockerItemTemplate.xml" />
     <None Include="Resources\Close_red_16x.png" />
     <Content Include="Resources\Close_8x_16x.png" />
