@@ -94,7 +94,6 @@
             // 
             this.toolStripMenuFileClose.Enabled = false;
             this.toolStripMenuFileClose.Name = "toolStripMenuFileClose";
-            this.toolStripMenuFileClose.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.toolStripMenuFileClose.Size = new System.Drawing.Size(206, 22);
             this.toolStripMenuFileClose.Text = "&Close";
             this.toolStripMenuFileClose.Click += new System.EventHandler(this.ToolStripMenuClose_Click);
