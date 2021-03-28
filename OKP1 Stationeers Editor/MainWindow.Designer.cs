@@ -50,6 +50,7 @@
             this.treeViewNavLeft = new System.Windows.Forms.TreeView();
             this.rightEditTab = new System.Windows.Forms.TabControl();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripMenuFileRecents = new System.Windows.Forms.ToolStripMenuItem();
             this.EdMainMenuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -74,6 +75,7 @@
             this.toolStripMenuFileOpen,
             this.toolStripMenuFileClose,
             this.toolStripMenuFileSave,
+            this.toolStripMenuFileRecents,
             this.toolStripSeparator1,
             this.toolStripMenuFileLoadData,
             this.toolStripSeparator2,
@@ -220,6 +222,12 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(23, 23);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
+            // toolStripMenuFileRecents
+            // 
+            this.toolStripMenuFileRecents.Name = "toolStripMenuFileRecents";
+            this.toolStripMenuFileRecents.Size = new System.Drawing.Size(206, 22);
+            this.toolStripMenuFileRecents.Text = "Recent Files";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,5 +276,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelGameVersion;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuFileLoadData;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuFileRecents;
     }
 }

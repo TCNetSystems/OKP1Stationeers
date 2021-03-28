@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 // using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 // using System.Text;
@@ -13,6 +14,8 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using JWC;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 
 namespace OKP1_Stationeers_Editor
@@ -22,17 +25,16 @@ namespace OKP1_Stationeers_Editor
         private FileStream WorldStream = null;
         private XDocument World = null;
         private bool WorldIsModified = false;
-        private string _recipeDataFile = null;
+        private readonly string _recipeDataFile = null;
+        private readonly string _mruRegKey = null;
+        protected MruStripMenu mruWorldFiles;
         
         public static readonly HttpClient httpClient = new HttpClient();
 
 
         public UInt64 MaxThingRefId
         {
-            get
-            {
-                return _maxThingRefId;
-            }
+            get => _maxThingRefId;
             set
             {
                 _maxThingRefId = value;
@@ -51,21 +53,13 @@ namespace OKP1_Stationeers_Editor
         protected string RecipeDataETag {
             get => Properties.Settings.Default.RecipeDataETag;
 
-            set {
-
-                Properties.Settings.Default.RecipeDataETag = value;
-            }
-
+            set => Properties.Settings.Default.RecipeDataETag = value;
         }
 
         protected DateTime RecipeDataRefreshedAt {
             get => Properties.Settings.Default.RecipeDataRefreshedAt;
 
-            set
-            {
-                Properties.Settings.Default.RecipeDataRefreshedAt = value;
-            }
-
+            set => Properties.Settings.Default.RecipeDataRefreshedAt = value;
         }
 
         private static UInt64 _maxThingRefId = 0;
@@ -74,15 +68,48 @@ namespace OKP1_Stationeers_Editor
         public MainWindow()
         {
             InitializeComponent();
+            toolStripMenuFileLoadData.Visible = false;
+            toolStripSeparator1.Visible = false;
+            toolStripSeparator2.Visible = false;
             string[] pathData = { Application.UserAppDataPath, "recipes-public.json" };
 
             _recipeDataFile = Path.Combine(pathData);
+
+            /*
+            RegistryKey mruRegistryKey = Registry.CurrentUser.OpenSubKey("Software", true);
+            mruRegistryKey = mruRegistryKey.CreateSubKey(Application.CompanyName, true);
+            mruRegistryKey = mruRegistryKey.CreateSubKey(Application.ProductName, true);
+            mruRegistryKey = mruRegistryKey.CreateSubKey("MRU", true);
+            */
+
+
+            _mruRegKey = "Software\\" + Application.CompanyName + "\\" + Application.ProductName + "\\MRU";
+            Debug.WriteLine($"MRU Strip Load RK {_mruRegKey}");
+            mruWorldFiles = new MruStripMenu(toolStripMenuFileRecents, new MruStripMenu.ClickedHandler(OnWorldMruClick),
+                _mruRegKey, true, 6);
+
+        }
+
+        private void OnWorldMruClick(int number, string filename)
+        {
+            // Make sure it still exists...
+            if (!File.Exists(filename))
+            {
+                MessageBox.Show("World File No Longer Exists (" + filename + ")", "Recent World File Missing",
+                    MessageBoxButtons.OK);
+                mruWorldFiles.RemoveFile(number);
+            }
+            else
+            {
+                PostFileSelectHandler(filename);
+            }
         }
 
         private void ToolStripMenuFileExit_Click(object sender, EventArgs e)
         {
             // XXX TODO XXX
             // check if open+unsaved and prompt for exit (unless disabled...?)
+            mruWorldFiles.SaveToRegistry(_mruRegKey);
             if (WorldStream != null)
             {
                 if (WorldIsModified)
@@ -111,38 +138,59 @@ namespace OKP1_Stationeers_Editor
 
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                // we update the cursor just because we can...loading and parsing really shouldn't take much time...
-                Cursor.Current = Cursors.WaitCursor;
-                toolStripStatusOpenedFileLabel.Text = openFileDialog.FileName;
-                WorldStream = File.Open(toolStripStatusOpenedFileLabel.Text, FileMode.Open, FileAccess.ReadWrite);
-                World = XDocument.Load(WorldStream, LoadOptions.PreserveWhitespace);
-                toolStripMenuFileClose.Enabled = true;
-                toolStripMenuFileOpen.Enabled = false;
-                World.Changed += new EventHandler<XObjectChangeEventArgs>(
-                    (csender, cea) =>
-                    {
-                        WorldIsModified = true;
-                        toolStripMenuFileSave.Enabled = true;
-                    }
-                );
-
-                // See if we've got recipe data file and fetch it if not...
-                if(!File.Exists(_recipeDataFile))
-                {
-                    HttpResponseMessage response;
-                    response = await FetchRecipes();
-                    DoRecipeDataCompletion(response);
-                }
-
-                if(GlobData._recipesDataFile == null)
-                {
-                    DoAutoCompleterLoad();
-                }
-
-                CompleteLoading();
-                treeViewNavLeft.Enabled = true;
-                Cursor.Current = Cursors.Default;
+                PostFileSelectHandler(openFileDialog.FileName);
             }
+        }
+
+        private async void PostFileSelectHandler(string filename)
+        {
+            // Ask if they want to abandon changes...
+            if (WorldStream != null && WorldIsModified)
+            {
+                if (MessageBox.Show("Load new world without saving current changes?", "Confirm Loading",
+                    MessageBoxButtons.YesNo) == DialogResult.No)
+                {
+                    return;
+                }
+                // Dispose of the current state of things...
+                DoCloseCleanup();
+            }
+            // we update the cursor just because we can...loading and parsing really shouldn't take much time...
+            Cursor.Current = Cursors.WaitCursor;
+            toolStripStatusOpenedFileLabel.Text = filename;
+            WorldStream = File.Open(filename, FileMode.Open, FileAccess.ReadWrite);
+            await Task.Run(() =>
+            {
+                 World = XDocument.Load(WorldStream, LoadOptions.PreserveWhitespace);
+            });
+            toolStripMenuFileClose.Enabled = true;
+            toolStripMenuFileOpen.Enabled = false;
+            World.Changed += new EventHandler<XObjectChangeEventArgs>(
+                (csender, cea) =>
+                {
+                    WorldIsModified = true;
+                    toolStripMenuFileSave.Enabled = true;
+                }
+            );
+
+            // See if we've got recipe data file and fetch it if not...
+            /*
+            if (!File.Exists(_recipeDataFile))
+            {
+                HttpResponseMessage response = await FetchRecipes();
+                DoRecipeDataCompletion(response);
+            }
+
+            if (GlobData._recipesDataFile == null)
+            {
+                DoAutoCompleterLoad();
+            }
+            */
+
+            CompleteLoading();
+            treeViewNavLeft.Enabled = true;
+            Cursor.Current = Cursors.Default;
+            mruWorldFiles.AddFile(filename);
         }
 
         private void CompleteLoading()
@@ -317,19 +365,19 @@ namespace OKP1_Stationeers_Editor
                 {
                     case ThingManager.ThingType.Locker:
                         {
-                            // Console.WriteLine("selected locker {0} [{1}]", thing.ToString(), sel.FullPath);
+                            Debug.WriteLine("selected locker {0} [{1}]", thing.ToString(), sel.FullPath);
                             // probably reimplement this similar to the Machines+Reagents...
                             ThingLocker thingLocker = (ThingLocker)thing;
                             if (!thingLocker.DataLoadedToNode)
                             {
-                                Console.WriteLine($"Locker {thingLocker.Id} not loaded, loading now");
+                                Debug.WriteLine($"Locker {thingLocker.Id} not loaded, loading now");
                                 LockerTreeViewAddChildNodes(sel.Nodes, thingLocker);
                             }
                         }
                         break;
 
                     case ThingManager.ThingType.Player:
-                        Console.WriteLine("Selected a player....");
+                        Debug.WriteLine("Selected a player....");
                         break;
 
                     case ThingManager.ThingType.LockerItem:
@@ -423,7 +471,7 @@ namespace OKP1_Stationeers_Editor
                         break;
 
                     default:
-                        Console.WriteLine("Shit! Unknown Thing Type in TreeViewNavLeft_AfterSelect [{0}]", thing.TypeOf);
+                        Debug.WriteLine("Shit! Unknown Thing Type in TreeViewNavLeft_AfterSelect [{0}]", thing.TypeOf);
                         break;
                 }
             }
@@ -571,7 +619,7 @@ namespace OKP1_Stationeers_Editor
             DateTime future = RecipeDataRefreshedAt.AddHours(2);
             if( current < future)
             {
-                Console.WriteLine($"Tried to fetch too soon {current} < {future}");
+                Debug.WriteLine($"Tried to fetch too soon {current} < {future}");
                 MessageBox.Show("Cannot comply, wait a couple of hours!");
                 return;
             }
@@ -583,7 +631,8 @@ namespace OKP1_Stationeers_Editor
             // Back in control of the UI thread...
             toolStripMenuFileLoadData.Enabled = true;
 
-            DoRecipeDataCompletion(response);
+            if(false) 
+                DoRecipeDataCompletion(response);
             
         }
 
@@ -633,11 +682,11 @@ namespace OKP1_Stationeers_Editor
                 string recipesData = File.ReadAllText(_recipeDataFile);
                 // try to deserialize it....
                 RecipeDataFile recipesDataFile = JsonConvert.DeserializeObject<RecipeDataFile>(recipesData);
-                Console.WriteLine($"Loaded {recipesDataFile.branch} from {recipesDataFile.updated_time} with {recipesDataFile.recipes.Count()}");
+                Debug.WriteLine($"Loaded {recipesDataFile.branch} from {recipesDataFile.updated_time} with {recipesDataFile.recipes.Count()}");
                 GlobData._recipesDataFile = recipesDataFile;
             } catch (FileNotFoundException)
             {
-                Console.WriteLine($"Unable to load recipe data file from {_recipeDataFile}");
+                Debug.WriteLine($"Unable to load recipe data file from {_recipeDataFile}");
                 return;
             }
 

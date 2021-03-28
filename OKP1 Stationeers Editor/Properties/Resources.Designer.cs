@@ -19,7 +19,7 @@ namespace OKP1_Stationeers_Editor.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -82,7 +82,7 @@ namespace OKP1_Stationeers_Editor.Properties {
         ///        &lt;z&gt;0&lt;/z&gt;
         ///    &lt;/Direction&gt;
         ///    &lt;NetworkReferenceId&gt;0&lt;/NetworkReferenceId&gt;
-        ///    &lt;ThingReferenceId&gt;0&lt;/ThingRef [rest of string was truncated]&quot;;.
+        ///    &lt;ThingRe [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string AtmosphereSaveDataTemplate {
             get {
@@ -136,8 +136,7 @@ namespace OKP1_Stationeers_Editor.Properties {
         ///  &lt;CustomColorIndex&gt;-1&lt;/CustomColorIndex&gt;
         ///  &lt;OwnerSteamId&gt;0&lt;/OwnerSteamId&gt;
         ///  &lt;Reagents /&gt;
-        ///  &lt;Indestructable&gt;false&lt;/Indestructable&gt;
-        ///   [rest of string was truncated]&quot;;.
+        ///  &lt;Indestructable&gt; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LockerItemTemplate {
             get {
