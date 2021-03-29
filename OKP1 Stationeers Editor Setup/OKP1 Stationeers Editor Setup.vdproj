@@ -58,12 +58,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_26D5AACA0EB925F567C885F7E18F6A4A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_61D1AF53963EB2EA9B159AC48E79A785"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -77,6 +71,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_4184FA08D9B58224546373039A42B35F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_26D5AACA0EB925F567C885F7E18F6A4A"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -392,7 +392,7 @@
         "UpgradeCode" = "8:{90320299-5C3A-4C0C-9EA5-D49EA3E26ACA}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:0.5.6"
@@ -405,8 +405,8 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
-        "ARPIconIndex" = "3:0"
+        "ARPPRODUCTICON" = "8:_3FD3CDD281524025951184E9A92580D3"
+        "ARPIconIndex" = "3:32512"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:0"
@@ -909,7 +909,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_3FD3CDD281524025951184E9A92580D3"
             {
-            "SourcePath" = "8:..\\OKP1 Stationeers Editor\\obj\\Release\\OKP1 Stationeers Editor.exe"
+            "SourcePath" = "8:..\\OKP1 Stationeers Editor\\obj\\Debug\\OKP1 Stationeers Editor.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_B6C8BCCC300F4894A60DE12DA09A1ABC"
