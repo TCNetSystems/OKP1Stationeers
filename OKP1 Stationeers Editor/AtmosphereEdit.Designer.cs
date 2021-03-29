@@ -43,6 +43,8 @@
             this.textBoxEnergy = new System.Windows.Forms.TextBox();
             this.labelVolume = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBoxTotalEnergy = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,6 +69,8 @@
             this.tableLayoutPanel1.Controls.Add(this.textBoxEnergy, 2, 7);
             this.tableLayoutPanel1.Controls.Add(this.labelVolume, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.buttonSave, 1, 10);
+            this.tableLayoutPanel1.Controls.Add(this.label6, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.textBoxTotalEnergy, 2, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -169,7 +173,7 @@
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Location = new System.Drawing.Point(203, 120);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(76, 20);
+            this.label4.Size = new System.Drawing.Size(80, 20);
             this.label4.TabIndex = 7;
             this.label4.Text = "Quantity(mol)";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -180,7 +184,7 @@
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label5.Location = new System.Drawing.Point(203, 140);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(76, 20);
+            this.label5.Size = new System.Drawing.Size(80, 20);
             this.label5.TabIndex = 8;
             this.label5.Text = "Energy(J)";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -189,17 +193,17 @@
             // 
             this.labelSpecificHeat.AutoSize = true;
             this.labelSpecificHeat.Dock = System.Windows.Forms.DockStyle.Left;
-            this.labelSpecificHeat.Location = new System.Drawing.Point(285, 100);
+            this.labelSpecificHeat.Location = new System.Drawing.Point(289, 100);
             this.labelSpecificHeat.Name = "labelSpecificHeat";
             this.labelSpecificHeat.Size = new System.Drawing.Size(22, 20);
             this.labelSpecificHeat.TabIndex = 9;
             this.labelSpecificHeat.Text = "0.0";
-            this.labelSpecificHeat.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelSpecificHeat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxQuantity
             // 
             this.textBoxQuantity.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBoxQuantity.Location = new System.Drawing.Point(285, 123);
+            this.textBoxQuantity.Location = new System.Drawing.Point(289, 123);
             this.textBoxQuantity.MaxLength = 128;
             this.textBoxQuantity.Name = "textBoxQuantity";
             this.textBoxQuantity.Size = new System.Drawing.Size(100, 22);
@@ -209,9 +213,10 @@
             // textBoxEnergy
             // 
             this.textBoxEnergy.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBoxEnergy.Location = new System.Drawing.Point(285, 143);
+            this.textBoxEnergy.Location = new System.Drawing.Point(289, 143);
             this.textBoxEnergy.MaxLength = 128;
             this.textBoxEnergy.Name = "textBoxEnergy";
+            this.textBoxEnergy.ReadOnly = true;
             this.textBoxEnergy.Size = new System.Drawing.Size(100, 22);
             this.textBoxEnergy.TabIndex = 11;
             this.textBoxEnergy.TextChanged += new System.EventHandler(this.textBoxEnergy_TextChanged);
@@ -220,9 +225,9 @@
             // 
             this.labelVolume.AutoSize = true;
             this.labelVolume.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelVolume.Location = new System.Drawing.Point(285, 20);
+            this.labelVolume.Location = new System.Drawing.Point(289, 20);
             this.labelVolume.Name = "labelVolume";
-            this.labelVolume.Size = new System.Drawing.Size(244, 20);
+            this.labelVolume.Size = new System.Drawing.Size(240, 20);
             this.labelVolume.TabIndex = 12;
             this.labelVolume.Text = "Tank Volume is 0L";
             this.labelVolume.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -233,11 +238,31 @@
             this.buttonSave.Enabled = false;
             this.buttonSave.Location = new System.Drawing.Point(203, 203);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(76, 24);
+            this.buttonSave.Size = new System.Drawing.Size(80, 24);
             this.buttonSave.TabIndex = 13;
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(203, 60);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(80, 13);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Total Energy(J)";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBoxTotalEnergy
+            // 
+            this.textBoxTotalEnergy.Dock = System.Windows.Forms.DockStyle.Left;
+            this.textBoxTotalEnergy.Location = new System.Drawing.Point(289, 63);
+            this.textBoxTotalEnergy.Name = "textBoxTotalEnergy";
+            this.textBoxTotalEnergy.Size = new System.Drawing.Size(100, 22);
+            this.textBoxTotalEnergy.TabIndex = 15;
+            this.textBoxTotalEnergy.Text = "0.0";
+            this.textBoxTotalEnergy.TextChanged += new System.EventHandler(this.textBoxTotalEnergy_TextChanged);
             // 
             // AtmosphereEdit
             // 
@@ -270,5 +295,7 @@
         private System.Windows.Forms.TextBox textBoxEnergy;
         private System.Windows.Forms.Label labelVolume;
         private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBoxTotalEnergy;
     }
 }

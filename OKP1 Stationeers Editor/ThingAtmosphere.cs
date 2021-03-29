@@ -122,11 +122,12 @@ namespace OKP1_Stationeers_Editor
         public override void Save()
         {
             // Pull total energy, and gases, writing them to the XML...
-            _atmosphere.Element("Energy").Value = gasMixture.Energy.ToString();
-
+            // _atmosphere.Element("Energy").Value = gasMixture.Energy.ToString();
+            _atmosphere.Element("Energy").Value = string.Format("{0:R}", gasMixture.Energy);
             foreach(KeyValuePair<string, Mole> gas in gasMixture.gases)
             {
-                _atmosphere.Element(gas.Key).Value = gas.Value.Quantity.ToString();
+                // _atmosphere.Element(gas.Key).Value = gas.Value.Quantity.ToString();
+                _atmosphere.Element(gas.Key).Value = string.Format("{0:R}", gas.Value.Quantity);
             }
 
             // should attach atmo here rather than during init...

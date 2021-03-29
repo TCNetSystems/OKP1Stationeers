@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace OKP1_Stationeers_Editor
     public partial class AtmosphereEdit : UserControl
     {
         private ThingAtmosphere atmosphere = null;
+        private bool doRefreshTotalEnergy = true;
         public AtmosphereEdit()
         {
             InitializeComponent();
@@ -39,6 +41,7 @@ namespace OKP1_Stationeers_Editor
         {
             double atmoPVal = 0.0;
             double atmoTVal = 0.0;
+            double atmoEVal = 0.0;
 
             // Totally empty things give a NaN!
             if (!float.IsNaN(atmosphere.gasMixture.Pressure))
@@ -59,6 +62,19 @@ namespace OKP1_Stationeers_Editor
             labelTemperatureC.Text = $"{atmoTVal.ToString("F2")} C";
 
             labelMol.Text = $"{atmosphere.gasMixture.TotalMoles} mol";
+
+            if (!float.IsNaN(atmosphere.gasMixture.Energy))
+            {
+                atmoEVal = atmosphere.gasMixture.Energy;
+            }
+
+            if(doRefreshTotalEnergy)
+            {
+                // skip our changed handler
+                textBoxTotalEnergy.TextChanged -= textBoxTotalEnergy_TextChanged;
+                textBoxTotalEnergy.Text = $"{atmoEVal.ToString("R")}";
+                textBoxTotalEnergy.TextChanged += textBoxTotalEnergy_TextChanged;
+            }
         }
 
         private void listBoxContents_SelectedIndexChanged(object sender, EventArgs e)
@@ -66,10 +82,10 @@ namespace OKP1_Stationeers_Editor
             
 
             Mole thing = (Mole)listBoxContents.SelectedValue;
-            textBoxQuantity.Text = thing.Quantity.ToString();
-            textBoxEnergy.Text = thing.Energy.ToString();
-            labelSpecificHeat.Text = thing.SpecificHeat.ToString();
-            Console.WriteLine($"Listbox Selected Index changed - val is type {listBoxContents.SelectedValue.GetType().ToString()}");
+            textBoxQuantity.Text = thing.Quantity.ToString("R");
+            textBoxEnergy.Text = thing.Energy.ToString("R");
+            labelSpecificHeat.Text = thing.SpecificHeat.ToString("R");
+            Debug.WriteLine($"Listbox Selected Index changed - val is type {listBoxContents.SelectedValue.GetType().ToString()}");
 
         }
 
@@ -107,6 +123,37 @@ namespace OKP1_Stationeers_Editor
         {
             buttonSave.Enabled = false;
             atmosphere.Save();
+        }
+
+        private void textBoxTotalEnergy_TextChanged(object sender, EventArgs e)
+        {
+            // Don't let cascaded refresh clobber user...
+            doRefreshTotalEnergy = false;
+            // Set the entire mixture energy....
+            try
+            {
+                
+                atmosphere.gasMixture.Energy = float.Parse(textBoxTotalEnergy.Text);
+                refreshCalculatedLabels();
+                buttonSave.Enabled = true;
+            }
+            catch (Exception)
+            {
+                doRefreshTotalEnergy = true;
+                return;
+            }
+
+            // If the energy is changed for the total, we have to refresh the individual gas if one is selected...
+            if (listBoxContents.SelectedIndex >= 0)
+            {
+                Mole thing = (Mole)listBoxContents.SelectedValue;
+                textBoxQuantity.Text = thing.Quantity.ToString("R");
+                textBoxEnergy.Text = thing.Energy.ToString("R");
+                labelSpecificHeat.Text = thing.SpecificHeat.ToString("R");
+            }
+
+            doRefreshTotalEnergy = true;
+
         }
     }
 }
