@@ -227,7 +227,7 @@ namespace OKP1_Stationeers_Editor
 
             // Run through and find the highest reference ID, lockers..etc...
             // Precompile Tank regex...
-            Regex tankRegex = new Regex(@"^((DynamicGasCanister)|(ItemGasCanister)|(StructureTank(Big|Small)))",RegexOptions.Compiled | RegexOptions.CultureInvariant);
+            Regex tankRegex = new Regex(@"^((DynamicGasCanister)|(ItemGasCanister)|(StructureTank(Big|Small)|(StructureLiquidTank(Big|Small)))",RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
             var things = from ln in World.Element("WorldData").Element("Things").Elements()
                          select ln;
