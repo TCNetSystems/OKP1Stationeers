@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-// using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-// using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -14,8 +11,8 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using JWC;
-using Microsoft.Win32;
 using Newtonsoft.Json;
 
 namespace OKP1_Stationeers_Editor
@@ -28,6 +25,10 @@ namespace OKP1_Stationeers_Editor
         private readonly string _recipeDataFile = null;
         private readonly string _mruRegKey = null;
         protected MruStripMenu mruWorldFiles;
+        // This mutex protects writing/loading autocomplete data....
+        // It's NOT really thread safe...we should replace the underlying GlobData structure
+        // with a ConcurrentDictionary
+        private Mutex fetchRecipeMutex = new Mutex();
         
         public static readonly HttpClient httpClient = new HttpClient();
 
@@ -71,17 +72,10 @@ namespace OKP1_Stationeers_Editor
             toolStripMenuFileLoadData.Visible = false;
             toolStripSeparator1.Visible = false;
             toolStripSeparator2.Visible = false;
-            string[] pathData = { Application.UserAppDataPath, "recipes-public.json" };
+            string[] pathData = { Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Application.CompanyName, Application.ProductName, "recipes-public.json" };
 
             _recipeDataFile = Path.Combine(pathData);
-
-            /*
-            RegistryKey mruRegistryKey = Registry.CurrentUser.OpenSubKey("Software", true);
-            mruRegistryKey = mruRegistryKey.CreateSubKey(Application.CompanyName, true);
-            mruRegistryKey = mruRegistryKey.CreateSubKey(Application.ProductName, true);
-            mruRegistryKey = mruRegistryKey.CreateSubKey("MRU", true);
-            */
-
+            Debug.WriteLine($"Recipe Datafile {_recipeDataFile}");
 
             _mruRegKey = "Software\\" + Application.CompanyName + "\\" + Application.ProductName + "\\MRU";
             Debug.WriteLine($"MRU Strip Load RK {_mruRegKey}");
@@ -174,18 +168,19 @@ namespace OKP1_Stationeers_Editor
             );
 
             // See if we've got recipe data file and fetch it if not...
-            /*
             if (!File.Exists(_recipeDataFile))
             {
+                // CLOBBER the etag, make the last fetch time implausibly earlier.....
+                RecipeDataETag = "";
+                RecipeDataRefreshedAt = DateTime.UtcNow.AddDays(-365);
                 HttpResponseMessage response = await FetchRecipes();
-                DoRecipeDataCompletion(response);
+                await DoRecipeDataCompletion(response);
             }
 
             if (GlobData._recipesDataFile == null)
             {
                 DoAutoCompleterLoad();
             }
-            */
 
             CompleteLoading();
             treeViewNavLeft.Enabled = true;
@@ -597,6 +592,7 @@ namespace OKP1_Stationeers_Editor
 
         private async Task<HttpResponseMessage> FetchRecipes()
         {
+            Debug.WriteLine($"Began dispatching recipe fetch....");
             HttpResponseMessage response;
             HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Get, Properties.Settings.Default.RecipeDataUrl);
             requestMessage.Headers.Accept.Clear();
@@ -607,6 +603,7 @@ namespace OKP1_Stationeers_Editor
             }
 
             response = await httpClient.SendAsync(requestMessage);
+            Debug.WriteLine($"Completed dispatching recipe fetch");
             return response;
         }
 
@@ -631,12 +628,13 @@ namespace OKP1_Stationeers_Editor
             // Back in control of the UI thread...
             toolStripMenuFileLoadData.Enabled = true;
 
-            if(false) 
-                DoRecipeDataCompletion(response);
+            await DoRecipeDataCompletion(response);
+
+            DoAutoCompleterLoad();
             
         }
 
-        private async void DoRecipeDataCompletion(HttpResponseMessage response)
+        private async Task<int> DoRecipeDataCompletion(HttpResponseMessage response)
         {
             switch (response.StatusCode)
             {
@@ -648,10 +646,12 @@ namespace OKP1_Stationeers_Editor
 
                     // Load out data to file
 
+                    fetchRecipeMutex.WaitOne();
                     if (File.Exists(_recipeDataFile))
                     {
                         File.Delete(_recipeDataFile);
                     }
+
                     FileStream dataFile = File.Open(_recipeDataFile, FileMode.CreateNew, FileAccess.ReadWrite);
                     byte[] recipeData = await response.Content.ReadAsByteArrayAsync();
                     await dataFile.WriteAsync(recipeData, 0, recipeData.Length);
@@ -661,8 +661,10 @@ namespace OKP1_Stationeers_Editor
                     RecipeDataRefreshedAt = DateTime.UtcNow;
                     RecipeDataETag = response.Headers.ETag.ToString();
 
+                    fetchRecipeMutex.ReleaseMutex();
                     // Import into autocompleters....
                     DoAutoCompleterLoad();
+                    
                     break;
 
                 default:
@@ -671,11 +673,13 @@ namespace OKP1_Stationeers_Editor
                     break;
 
             }
+
+            return 0;
         }
 
         private void DoAutoCompleterLoad()
         {
-
+            fetchRecipeMutex.WaitOne();
             
             try
             {
@@ -686,27 +690,38 @@ namespace OKP1_Stationeers_Editor
                 GlobData._recipesDataFile = recipesDataFile;
             } catch (FileNotFoundException)
             {
+                fetchRecipeMutex.ReleaseMutex();
                 Debug.WriteLine($"Unable to load recipe data file from {_recipeDataFile}");
                 return;
             }
+            
 
             // Massage into a dictionary...
             GlobData.Recipes.Clear();
+            UInt32 countRecipes = 0;
             foreach(ItemRecipe ri in GlobData._recipesDataFile.recipes)
             {
 
                 // Instead of exception try/catch, explicitly look
 
                 if(GlobData.Recipes.ContainsKey(ri.item))
-                {
+                { 
                     GlobData.Recipes[ri.item].Add(ri);
                 } else
                 {
-                    List<ItemRecipe> rl = new List<ItemRecipe>();
-                    rl.Add(ri);
+                    List<ItemRecipe> rl = new List<ItemRecipe>
+                    {
+                        ri
+                    };
+
                     GlobData.Recipes.Add(ri.item, rl);
+
                 }
+
+                countRecipes++;
             }
+            fetchRecipeMutex.ReleaseMutex();
+            Debug.WriteLine($"Left Critical Section with {countRecipes} loaded");
             return;
         }
 

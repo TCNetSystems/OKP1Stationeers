@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
+﻿using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 
 namespace OKP1_Stationeers_Editor
@@ -15,7 +8,7 @@ namespace OKP1_Stationeers_Editor
     public partial class LockerItemEdit : UserControl
     {
         private ThingLockerItem lockerItem = null;
-        enum EditType { Unknown, Stackable };
+        enum EditType { Unknown, Stackable, DynamicThing };
         private EditType _editType = EditType.Unknown;
         public LockerItemEdit()
         {
@@ -35,6 +28,9 @@ namespace OKP1_Stationeers_Editor
                 case "StackableSaveData":
                     _editType = EditType.Stackable;
                     break;
+                case "DynamicThingSaveData":
+                    _editType = EditType.DynamicThing;
+                    break;
                 default:
                     _editType = EditType.Unknown;
                     break;
@@ -53,6 +49,7 @@ namespace OKP1_Stationeers_Editor
             {
                  case EditType.Stackable:
                     {
+                        // Honestly should convert this to "designed" sub bits...
                         TableLayoutPanel editorLayoutPanel = new TableLayoutPanel();   
                         Label itemPrefabNameLabel = new Label();
                         Label itemQuantityLabel = new Label();
@@ -88,6 +85,13 @@ namespace OKP1_Stationeers_Editor
                         itemPrefabName.Size = new Size(124, 20);
                         itemPrefabName.Text = lockerItem.PrefabName;
 
+                        AutoCompleteStringCollection itemPrefabCompleter = new AutoCompleteStringCollection();
+                        itemPrefabCompleter.AddRange(GlobData.Recipes.Keys.ToArray());
+                        itemPrefabName.AutoCompleteCustomSource = itemPrefabCompleter;
+                        itemPrefabName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                        itemPrefabName.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                        
+
                         editorLayoutPanel.Controls.Add(itemPrefabName,1,0);
                         
 
@@ -103,6 +107,11 @@ namespace OKP1_Stationeers_Editor
                         itemQuantity.Text = lockerItem.Quantity.ToString();
 
                         editorLayoutPanel.Controls.Add(itemQuantity,1,1);
+
+                        buttonSave.Name = "buttonSave";
+                        buttonSave.Text = "Save";
+
+                        editorLayoutPanel.Controls.Add(buttonSave, 0, 2);
 
                         
 

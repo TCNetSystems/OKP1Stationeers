@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("TCNet Systems")]
 [assembly: AssemblyProduct("OKP1 Stationeers Editor")]
-[assembly: AssemblyCopyright("Copyright ©  2017-2021")]
+[assembly: AssemblyCopyright("Copyright © 2017-2021 TCNet Systems")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -9,6 +9,7 @@ namespace OKP1_Stationeers_Editor
         public static Dictionary<Int64, XElement> _atmosphereDataByThing = new Dictionary<Int64, XElement>();
         public static RecipeDataFile _recipesDataFile = null;
         // Hint the Dict to build to 490 items...That's the max estimated size right now (actually ends up ~310)
+        // This should be replaced with a thread safe variant....
         public static Dictionary<string, List<ItemRecipe>> Recipes = new Dictionary<string, List<ItemRecipe>>(490);
         public static Dictionary<string, float> GasContainerDefaultVolumes = new Dictionary<string, float>() {
             { "DynamicGasCanister", 790f },
