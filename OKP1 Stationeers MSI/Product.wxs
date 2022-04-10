@@ -67,10 +67,11 @@
 	</Fragment>
 
 	<Fragment>
+		<Icon Id="OKP1Editor.ico" SourceFile="$(var.SolutionDir)\icon.ico"/>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLDIR">
 			<Component Id="OKP1StationeersEditorExe_comp">
 				<File Id="OKP1StationeersEditorExe" Source="$(var.OKP1 Stationeers Editor.TargetPath)" KeyPath="yes">
-					<Shortcut Id="OKP1StationeersEditorStartMenu" Directory="ProgramMenuDir" Name="OKP1 Stationeers Editor" WorkingDirectory="INSTALLDIR" Advertise="yes" />
+					<Shortcut Id="OKP1StationeersEditorStartMenu" Directory="ProgramMenuDir" Name="OKP1 Stationeers Editor" WorkingDirectory="INSTALLDIR" Advertise="yes" Icon="OKP1Editor.ico"/>
 				</File>
 			</Component>
 			<Component Id="ExeConfig">
