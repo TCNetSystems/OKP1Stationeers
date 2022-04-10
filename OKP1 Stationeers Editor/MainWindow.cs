@@ -90,7 +90,7 @@ namespace OKP1_Stationeers_Editor
 
         }
 
-        private void OnWorldMruClick(int number, string filename)
+        private async void OnWorldMruClick(int number, string filename)
         {
             // Make sure it still exists...
             if (!File.Exists(filename))
@@ -101,7 +101,7 @@ namespace OKP1_Stationeers_Editor
             }
             else
             {
-                PostFileSelectHandler(filename);
+                await PostFileSelectHandler(filename);
             }
         }
 
@@ -138,11 +138,11 @@ namespace OKP1_Stationeers_Editor
 
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                PostFileSelectHandler(openFileDialog.FileName);
+                await PostFileSelectHandler(openFileDialog.FileName);
             }
         }
 
-        private async void PostFileSelectHandler(string filename)
+        private async Task PostFileSelectHandler(string filename)
         {
             // Ask if they want to abandon changes...
             if (WorldStream != null && WorldIsModified)

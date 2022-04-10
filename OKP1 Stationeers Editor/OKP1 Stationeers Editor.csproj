@@ -54,7 +54,7 @@
     <ManifestTimestampUrl>http://timestamp.sectigo.com</ManifestTimestampUrl>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>A1105CA13D4ACC7BB1B471F785A4713E40CFCDD6</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>DA23B10C636E6B99D993CA4CE232C66D3EB78EC0</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -70,8 +70,8 @@
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
@@ -91,7 +91,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="UnitsNet, Version=4.0.0.0, Culture=neutral, PublicKeyToken=f8601875a1f041da, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnitsNet.4.83.0\lib\net40\UnitsNet.dll</HintPath>
+      <HintPath>..\packages\UnitsNet.4.128.0\lib\net47\UnitsNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
