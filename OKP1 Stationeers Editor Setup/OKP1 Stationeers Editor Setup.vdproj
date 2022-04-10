@@ -395,7 +395,7 @@
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.5.9"
+        "ProductVersion" = "8:0.6.0"
         "Manufacturer" = "8:TCNet Systems"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
