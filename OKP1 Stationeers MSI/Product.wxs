@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+
+	<?define VersionNumber="!(bind.FileVersion.OKP1StationeersEditorExe)"?>
+	<?define ManufacturerName="TCNet Systems"?>
+
+
+
+	<Product Id="*" Name="OKP1 Stationeers Editor" Language="1033" Version="$(var.VersionNumber)" Manufacturer="$(var.ManufacturerName)" UpgradeCode="23cd24f1-c94f-4342-a955-523d0b439d03">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<Feature Id="Complete" Title="OKP1 Stationeers Editor" Level="1" ConfigurableDirectory="INSTALLDIR">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentRef Id="ProgramMenuDir" />
+		</Feature>
+
+		<Property Id="ARPNOREPAIR" Value="yes" />
+		<Property Id="ARPNOMODIFY" Value="yes" />
+		<InstallExecuteSequence>
+			<Custom Action="SetARPINSTALLLOCATION" After="InstallValidate" />
+		</InstallExecuteSequence>
+
+		<CustomAction Id="SetARPINSTALLLOCATION" Property="ARPINSTALLLOCATION" Value="[INSTALLDIR]" />
+		<!-- Handle saving command line passed vars that can get clobbered -->
+		<CustomAction Id="SaveCmdLineValueINSTALLDIR" Property="CMDLINE_INSTALLDIR" Value="[INSTALLDIR]" Execute="firstSequence"/>
+		<CustomAction Id="SetFromCmdLineValueINSTALLDIR" Property="INSTALLDIR" Value="[CMDLINE_INSTALLDIR]" Execute="firstSequence"/>
+
+		<InstallUISequence>
+			<Custom Action="SaveCmdLineValueINSTALLDIR" Before="AppSearch" />
+			<Custom Action="SetFromCmdLineValueINSTALLDIR" After="AppSearch">
+				CMDLINE_INSTALLDIR
+			</Custom>
+		</InstallUISequence>
+		<InstallExecuteSequence>
+			<Custom Action="SaveCmdLineValueINSTALLDIR" Before="AppSearch" />
+			<Custom Action="SetFromCmdLineValueINSTALLDIR" After="AppSearch">
+				CMDLINE_INSTALLDIR
+			</Custom>
+		</InstallExecuteSequence>
+
+		<Property Id="INSTALLDIR">
+			<RegistrySearch Id="DetermineInstallLocation" Type="raw" Root="HKLM" Key="Software\$(var.ManufacturerName)\InstalledProducts\OKP1StationeersEditor" Name="InstallLocation" />
+		</Property>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="ProgramFilesTCS" Name="$(var.ManufacturerName)">
+					<Directory Id="INSTALLDIR" Name="LumpyDispatcher" />
+				</Directory>
+			</Directory>
+			<Directory Id="ProgramMenuFolder" Name="Programs">
+				<Directory Id="ProgramMenuDir" Name="Lumpy Dispatcher">
+					<!-- WiX complains if we move this to the ComponentGroup, probably because it can't tie the KeyPath together and IDK how to fix...-->
+					<Component Id="ProgramMenuDir" Guid="75E37478-DAA0-4D4F-810D-779ED379745D">
+						<RemoveFolder Id="ProgramMenuDir" On="uninstall"/>
+						<RegistryValue Root="HKCU" Key="Software\$(var.ManufacturerName)\InstalledProducts\OKP1StationeersEditor\PMDFlag" Type="string" Value="" KeyPath="yes" />
+					</Component>
+				</Directory>
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLDIR">
+			<Component Id="OKP1StationeersEditorExe_comp">
+				<File Id="OKP1StationeersEditorExe" Source="$(var.OKP1 Stationeers Editor.TargetPath)" KeyPath="yes">
+					<Shortcut Id="OKP1StationeersEditorStartMenu" Directory="ProgramMenuDir" Name="OKP1 Stationeers Editor" WorkingDirectory="INSTALLDIR" Advertise="yes" />
+				</File>
+			</Component>
+			<Component Id="ExeConfig">
+				<File Source="$(var.OKP1 Stationeers Editor.TargetDir)\OKP1 Stationeers Editor.exe.config" />
+			</Component>
+			<Component Id="ExeManifest">
+				<File Source="$(var.OKP1 Stationeers Editor.TargetDir)\OKP1 Stationeers Editor.exe.manifest" />
+			</Component>
+			<Component Id="SystemValueTupleDll">
+				<File Source="$(var.OKP1 Stationeers Editor.TargetDir)\System.ValueTuple.dll" />
+			</Component>
+			<Component Id="UnitsNetDll">
+				<File Source="$(var.OKP1 Stationeers Editor.TargetDir)\UnitsNet.dll" />
+			</Component>
+			<Component Id="NewtonSoftJsonDll">
+				<File Source="$(var.OKP1 Stationeers Editor.TargetDir)\Newtonsoft.Json.dll" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

@@ -1,16 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31005.135
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OKP1 Stationeers Editor", "OKP1 Stationeers Editor\OKP1 Stationeers Editor.csproj", "{33F010F0-C6F4-4296-B599-9721658EC080}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "OKP1 Stationeers Editor Setup", "OKP1 Stationeers Editor Setup\OKP1 Stationeers Editor Setup.vdproj", "{CB527BBF-F293-45C3-8788-A358BC210CA4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{331F919D-52D7-4698-8EAD-2059B287BC96}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "OKP1 Stationeers MSI", "OKP1 Stationeers MSI\OKP1 Stationeers MSI.wixproj", "{2C8BFFC9-4740-41B6-81BF-2E0D8A1FA05F}"
+EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "OKP1 Stationeers Bootstrap Installer", "OKP1 Stationeers Bootstrap Installer\OKP1 Stationeers Bootstrap Installer.wixproj", "{8A19FFAA-37CE-4404-8661-1B7BE3165E18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,14 +30,22 @@ Global
 		{33F010F0-C6F4-4296-B599-9721658EC080}.Release|Any CPU.Build.0 = Release|Any CPU
 		{33F010F0-C6F4-4296-B599-9721658EC080}.Release|x86.ActiveCfg = Release|Any CPU
 		{33F010F0-C6F4-4296-B599-9721658EC080}.Release|x86.Build.0 = Release|Any CPU
-		{CB527BBF-F293-45C3-8788-A358BC210CA4}.Debug|Any CPU.ActiveCfg = Debug
-		{CB527BBF-F293-45C3-8788-A358BC210CA4}.Debug|Any CPU.Build.0 = Debug
-		{CB527BBF-F293-45C3-8788-A358BC210CA4}.Debug|x86.ActiveCfg = Debug
-		{CB527BBF-F293-45C3-8788-A358BC210CA4}.Debug|x86.Build.0 = Debug
-		{CB527BBF-F293-45C3-8788-A358BC210CA4}.Release|Any CPU.ActiveCfg = Release
-		{CB527BBF-F293-45C3-8788-A358BC210CA4}.Release|Any CPU.Build.0 = Release
-		{CB527BBF-F293-45C3-8788-A358BC210CA4}.Release|x86.ActiveCfg = Release
-		{CB527BBF-F293-45C3-8788-A358BC210CA4}.Release|x86.Build.0 = Release
+		{2C8BFFC9-4740-41B6-81BF-2E0D8A1FA05F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{2C8BFFC9-4740-41B6-81BF-2E0D8A1FA05F}.Debug|Any CPU.Build.0 = Debug|x86
+		{2C8BFFC9-4740-41B6-81BF-2E0D8A1FA05F}.Debug|x86.ActiveCfg = Debug|x86
+		{2C8BFFC9-4740-41B6-81BF-2E0D8A1FA05F}.Debug|x86.Build.0 = Debug|x86
+		{2C8BFFC9-4740-41B6-81BF-2E0D8A1FA05F}.Release|Any CPU.ActiveCfg = Release|x86
+		{2C8BFFC9-4740-41B6-81BF-2E0D8A1FA05F}.Release|Any CPU.Build.0 = Release|x86
+		{2C8BFFC9-4740-41B6-81BF-2E0D8A1FA05F}.Release|x86.ActiveCfg = Release|x86
+		{2C8BFFC9-4740-41B6-81BF-2E0D8A1FA05F}.Release|x86.Build.0 = Release|x86
+		{8A19FFAA-37CE-4404-8661-1B7BE3165E18}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{8A19FFAA-37CE-4404-8661-1B7BE3165E18}.Debug|Any CPU.Build.0 = Debug|x86
+		{8A19FFAA-37CE-4404-8661-1B7BE3165E18}.Debug|x86.ActiveCfg = Debug|x86
+		{8A19FFAA-37CE-4404-8661-1B7BE3165E18}.Debug|x86.Build.0 = Debug|x86
+		{8A19FFAA-37CE-4404-8661-1B7BE3165E18}.Release|Any CPU.ActiveCfg = Release|x86
+		{8A19FFAA-37CE-4404-8661-1B7BE3165E18}.Release|Any CPU.Build.0 = Release|x86
+		{8A19FFAA-37CE-4404-8661-1B7BE3165E18}.Release|x86.ActiveCfg = Release|x86
+		{8A19FFAA-37CE-4404-8661-1B7BE3165E18}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

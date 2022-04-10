@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+	<Bundle 
+		Name="OKP1 Stationeers Editor Installer" 
+		Version="!(bind.packageVersion.OKP1StationeersPackage)" 
+		Manufacturer="TCNet Systems" 
+		UpgradeCode="8a19ffaa-37ce-4404-8661-1b7be3165e18"
+		DisableModify="yes"
+		DisableRepair="yes"
+		>
+		<BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkLicense">
+			<bal:WixStandardBootstrapperApplication
+				LicenseUrl=""
+				SuppressRepair="yes"
+				SuppressOptionsUI="yes"
+				LogoFile="$(var.SolutionDir)\icon.ico"
+				ShowVersion="yes"
+			/>
+		</BootstrapperApplicationRef>
+
+		<Chain>
+			<PackageGroupRef Id="NetFx48Redist" />
+			<MsiPackage Id="OKP1StationeersPackage"
+						SourceFile="$(var.OKP1 Stationeers MSI.TargetPath)"
+						Visible="no"
+						/>
+		</Chain>
+	</Bundle>
+</Wix>
