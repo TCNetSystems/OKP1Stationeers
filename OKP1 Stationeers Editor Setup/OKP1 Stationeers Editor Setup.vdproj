@@ -395,7 +395,7 @@
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.5.7"
+        "ProductVersion" = "8:0.5.8"
         "Manufacturer" = "8:TCNet Systems"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -411,7 +411,7 @@
         "UseSystemSearchPath" = "11:TRUE"
         "TargetPlatform" = "3:0"
         "PreBuildEvent" = "8:"
-        "PostBuildEvent" = "8:IF \"$(Configuration)\" == \"Release\" ( \"C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x86\\signtool.exe\" sign /fd sha256 /tr http://timestamp.sectigo.com /td sha256 \"$(BuiltOuputPath)\" \"$(ProjectDir)$(Configuration)\\setup.exe\" )"
+        "PostBuildEvent" = "8:IF \"$(Configuration)\" == \"Release\" ( \"C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\x86\\signtool.exe\" sign /sha1 da23b10c636e6b99d993ca4ce232c66d3eb78ec0 /fd sha256 /tr http://timestamp.sectigo.com /td sha256 \"$(BuiltOuputPath)\" \"$(ProjectDir)$(Configuration)\\setup.exe\" )"
         "RunPostBuildEvent" = "3:0"
         }
         "Registry"

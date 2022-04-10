@@ -195,6 +195,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>IF "$(ConfigurationName)" == "Release" ( "C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x86\signtool.exe" sign /fd sha256 /tr http://timestamp.sectigo.com/ /td sha256 "$(TargetPath)" )</PostBuildEvent>
+    <PostBuildEvent>IF "$(ConfigurationName)" == "Release" ( "C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x86\signtool.exe" sign /sha1 da23b10c636e6b99d993ca4ce232c66d3eb78ec0 /fd sha256 /tr http://timestamp.sectigo.com/ /td sha256 "$(TargetPath)" )</PostBuildEvent>
   </PropertyGroup>
 </Project>
